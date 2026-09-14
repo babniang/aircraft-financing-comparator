@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+
+  --c-bg: #ffffff;
+  --c-ink: #0d1b2a;
+  --c-ink-soft: #2b3b4d;
+  --c-slate: #52657a;
+  --c-blue-900: #0a2540;
+  --c-blue-700: #0a4c8b;
+  --c-blue-500: #1666c8;
+  --c-blue-100: #e6eef8;
+  --c-blue-050: #f4f8fc;
+  --c-rule: #c3d0e0;
+  --c-rule-strong: #9db2cc;
+  --c-neg: #b3261e;
+  --r: 2px;
+
+  /* goldmansachs.com styles its visible text with "GS Sans", falling back to
+     Helvetica / Arial / sans-serif. That is the stack used here; GS Sans is a
+     custom face not on any public CDN, so it is not bundled and the fallback
+     (Helvetica Neue / Helvetica / Arial) carries the design. */
+  --font-sans: "GS Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "SFMono-Regular", ui-monospace, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* Micro label: uppercase, tracked, small. */
+.eyebrow {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--c-slate);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+a {
+  color: var(--c-blue-500);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+::selection {
+  background: #cfe0f7;
+}
+
+/* ------------------------------------------------------------------ *
+ * Excel-style data grid
+ * ------------------------------------------------------------------ */
+.xl {
+  border-collapse: collapse;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+.xl th,
+.xl td {
+  border: 1px solid var(--c-rule);
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+.xl thead th {
+  background: var(--c-blue-100);
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--c-blue-700);
+  text-align: right;
+  vertical-align: bottom;
+}
+.xl thead th:first-child {
+  text-align: left;
+}
+.xl tbody td {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  text-align: right;
+  color: var(--c-ink);
+}
+.xl tbody th,
+.xl tbody td:first-child {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: left;
+  font-weight: 400;
+  color: var(--c-ink);
+}
+.xl tbody tr:nth-child(even) {
+  background: var(--c-blue-050);
+}
+.xl tr.xl-hi > * {
+  background: var(--c-blue-100);
+  font-weight: 700;
+}
+.xl tr.xl-total > * {
+  border-top: 2px solid var(--c-rule-strong);
+  font-weight: 700;
+}
+.xl .neg {
+  color: var(--c-neg);
+}
+.xl .muted {
+  color: var(--c-slate);
+}
+/* text (non-numeric) column: sans, left-aligned even in the body */
+.xl th.txt,
+.xl td.txt {
+  font-family: var(--font-sans);
+  text-align: left;
+  font-size: 13px;
+}
+
+/* Native number inputs: hide spinners, keep the mobile numeric keypad. */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}

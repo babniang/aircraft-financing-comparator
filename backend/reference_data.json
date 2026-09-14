@@ -1,0 +1,316 @@
+{
+  "version": "2026-09",
+  "sources_note": "Indicative figures derived from IBA/Cirium published lease-rate-factor ranges and OEM list-price/discount commentary. See docs/methodology.md for citations. Not a valuation.",
+  "aircraft": [
+    {
+      "id": "a220-300",
+      "label": "Airbus A220-300",
+      "operator": "Air France",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 45,
+      "typical_market_value_usd_m": 48,
+      "typical_lease_rate_factor_pct": 0.80,
+      "gtf_exposed": true
+    },
+    {
+      "id": "a319ceo",
+      "label": "Airbus A319",
+      "operator": "Air France",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 16,
+      "typical_market_value_usd_m": 13,
+      "typical_lease_rate_factor_pct": 1.05,
+      "gtf_exposed": false
+    },
+    {
+      "id": "a320ceo",
+      "label": "Airbus A320",
+      "operator": "Air France / Transavia",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 22,
+      "typical_market_value_usd_m": 19,
+      "typical_lease_rate_factor_pct": 0.98,
+      "gtf_exposed": false
+    },
+    {
+      "id": "a321ceo",
+      "label": "Airbus A321",
+      "operator": "Air France",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 32,
+      "typical_market_value_usd_m": 28,
+      "typical_lease_rate_factor_pct": 0.92,
+      "gtf_exposed": false
+    },
+    {
+      "id": "a320neo",
+      "label": "Airbus A320neo",
+      "operator": "Transavia / KLM",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 55,
+      "typical_market_value_usd_m": 60,
+      "typical_lease_rate_factor_pct": 0.75,
+      "gtf_exposed": true
+    },
+    {
+      "id": "a321neo",
+      "label": "Airbus A321neo",
+      "operator": "KLM / Transavia",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 65,
+      "typical_market_value_usd_m": 70,
+      "typical_lease_rate_factor_pct": 0.74,
+      "gtf_exposed": true
+    },
+    {
+      "id": "a330-200",
+      "label": "Airbus A330-200",
+      "operator": "Air France / KLM",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 40,
+      "typical_market_value_usd_m": 32,
+      "typical_lease_rate_factor_pct": 0.95,
+      "gtf_exposed": false
+    },
+    {
+      "id": "a330-300",
+      "label": "Airbus A330-300",
+      "operator": "KLM",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 50,
+      "typical_market_value_usd_m": 40,
+      "typical_lease_rate_factor_pct": 0.92,
+      "gtf_exposed": false
+    },
+    {
+      "id": "a350-900",
+      "label": "Airbus A350-900",
+      "operator": "Air France",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 150,
+      "typical_market_value_usd_m": 160,
+      "typical_lease_rate_factor_pct": 0.68,
+      "gtf_exposed": false
+    },
+    {
+      "id": "a350-1000",
+      "label": "Airbus A350-1000",
+      "operator": "Air France (order)",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 180,
+      "typical_market_value_usd_m": 188,
+      "typical_lease_rate_factor_pct": 0.67,
+      "gtf_exposed": false
+    },
+    {
+      "id": "a350f",
+      "label": "Airbus A350F",
+      "operator": "Air France Cargo (order)",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 225,
+      "typical_market_value_usd_m": 228,
+      "typical_lease_rate_factor_pct": 0.66,
+      "gtf_exposed": false
+    },
+    {
+      "id": "737-800",
+      "label": "Boeing 737-800",
+      "operator": "Transavia / KLM",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 22,
+      "typical_market_value_usd_m": 18,
+      "typical_lease_rate_factor_pct": 0.95,
+      "gtf_exposed": false
+    },
+    {
+      "id": "737-900",
+      "label": "Boeing 737-900",
+      "operator": "KLM",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 26,
+      "typical_market_value_usd_m": 21,
+      "typical_lease_rate_factor_pct": 0.93,
+      "gtf_exposed": false
+    },
+    {
+      "id": "737-max8",
+      "label": "Boeing 737 MAX 8",
+      "operator": "Transavia (order)",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 52,
+      "typical_market_value_usd_m": 55,
+      "typical_lease_rate_factor_pct": 0.76,
+      "gtf_exposed": false
+    },
+    {
+      "id": "777-200er",
+      "label": "Boeing 777-200ER",
+      "operator": "Air France / KLM",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 30,
+      "typical_market_value_usd_m": 22,
+      "typical_lease_rate_factor_pct": 0.95,
+      "gtf_exposed": false
+    },
+    {
+      "id": "777-300er",
+      "label": "Boeing 777-300ER",
+      "operator": "Air France / KLM",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 175,
+      "typical_market_value_usd_m": 65,
+      "typical_lease_rate_factor_pct": 0.85,
+      "gtf_exposed": false
+    },
+    {
+      "id": "777f",
+      "label": "Boeing 777F",
+      "operator": "Air France Cargo",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 200,
+      "typical_market_value_usd_m": 135,
+      "typical_lease_rate_factor_pct": 0.80,
+      "gtf_exposed": false
+    },
+    {
+      "id": "787-9",
+      "label": "Boeing 787-9",
+      "operator": "KLM",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 145,
+      "typical_market_value_usd_m": 155,
+      "typical_lease_rate_factor_pct": 0.69,
+      "gtf_exposed": false
+    },
+    {
+      "id": "787-10",
+      "label": "Boeing 787-10",
+      "operator": "KLM (order)",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 165,
+      "typical_market_value_usd_m": 172,
+      "typical_lease_rate_factor_pct": 0.68,
+      "gtf_exposed": false
+    },
+    {
+      "id": "e175-e1",
+      "label": "Embraer E175",
+      "operator": "KLM Cityhopper",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 28,
+      "typical_market_value_usd_m": 24,
+      "typical_lease_rate_factor_pct": 0.95,
+      "gtf_exposed": false
+    },
+    {
+      "id": "e190-e1",
+      "label": "Embraer E190",
+      "operator": "Air France HOP / KLM",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 26,
+      "typical_market_value_usd_m": 18,
+      "typical_lease_rate_factor_pct": 0.98,
+      "gtf_exposed": false
+    },
+    {
+      "id": "e190-e2",
+      "label": "Embraer E190-E2",
+      "operator": "KLM Cityhopper",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 38,
+      "typical_market_value_usd_m": 40,
+      "typical_lease_rate_factor_pct": 0.84,
+      "gtf_exposed": true
+    },
+    {
+      "id": "e195-e2",
+      "label": "Embraer E195-E2",
+      "operator": "KLM Cityhopper",
+      "afklm_fleet": true,
+      "typical_delivery_price_usd_m": 42,
+      "typical_market_value_usd_m": 44,
+      "typical_lease_rate_factor_pct": 0.83,
+      "gtf_exposed": true
+    },
+    {
+      "id": "a220-100",
+      "label": "Airbus A220-100",
+      "operator": "",
+      "afklm_fleet": false,
+      "typical_delivery_price_usd_m": 40,
+      "typical_market_value_usd_m": 42,
+      "typical_lease_rate_factor_pct": 0.82,
+      "gtf_exposed": true
+    },
+    {
+      "id": "a319neo",
+      "label": "Airbus A319neo",
+      "operator": "",
+      "afklm_fleet": false,
+      "typical_delivery_price_usd_m": 50,
+      "typical_market_value_usd_m": 52,
+      "typical_lease_rate_factor_pct": 0.78,
+      "gtf_exposed": true
+    },
+    {
+      "id": "a321xlr",
+      "label": "Airbus A321XLR",
+      "operator": "",
+      "afklm_fleet": false,
+      "typical_delivery_price_usd_m": 75,
+      "typical_market_value_usd_m": 79,
+      "typical_lease_rate_factor_pct": 0.73,
+      "gtf_exposed": true
+    },
+    {
+      "id": "a330-900",
+      "label": "Airbus A330-900neo",
+      "operator": "",
+      "afklm_fleet": false,
+      "typical_delivery_price_usd_m": 135,
+      "typical_market_value_usd_m": 140,
+      "typical_lease_rate_factor_pct": 0.70,
+      "gtf_exposed": false
+    },
+    {
+      "id": "737-max9",
+      "label": "Boeing 737 MAX 9",
+      "operator": "",
+      "afklm_fleet": false,
+      "typical_delivery_price_usd_m": 58,
+      "typical_market_value_usd_m": 60,
+      "typical_lease_rate_factor_pct": 0.75,
+      "gtf_exposed": false
+    },
+    {
+      "id": "737-max10",
+      "label": "Boeing 737 MAX 10",
+      "operator": "",
+      "afklm_fleet": false,
+      "typical_delivery_price_usd_m": 64,
+      "typical_market_value_usd_m": 66,
+      "typical_lease_rate_factor_pct": 0.74,
+      "gtf_exposed": false
+    },
+    {
+      "id": "787-8",
+      "label": "Boeing 787-8",
+      "operator": "",
+      "afklm_fleet": false,
+      "typical_delivery_price_usd_m": 130,
+      "typical_market_value_usd_m": 120,
+      "typical_lease_rate_factor_pct": 0.72,
+      "gtf_exposed": false
+    },
+    {
+      "id": "777-9",
+      "label": "Boeing 777-9",
+      "operator": "",
+      "afklm_fleet": false,
+      "typical_delivery_price_usd_m": 210,
+      "typical_market_value_usd_m": 215,
+      "typical_lease_rate_factor_pct": 0.66,
+      "gtf_exposed": false
+    }
+  ]
+}
