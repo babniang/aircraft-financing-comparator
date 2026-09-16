@@ -77,7 +77,7 @@ export default function InputPanel({
               ))}
             </optgroup>
           </select>
-          <p className="mt-2 h-4 text-[12px] text-muted">{selected?.operator || ""}</p>
+          <p className="mt-2 h-4 text-[13px] text-ink2">{selected?.operator || ""}</p>
         </div>
 
         <div className="md:col-span-2">
@@ -134,7 +134,7 @@ export default function InputPanel({
 
       <div className="mt-8 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
-          <label className="flex min-h-11 cursor-pointer items-center gap-2.5 text-[13px]">
+          <label className="flex min-h-11 cursor-pointer items-center gap-2.5 text-[14px]">
             <input
               type="checkbox"
               role="switch"
@@ -145,7 +145,7 @@ export default function InputPanel({
             <span className="text-ink">{t("inputs.gtfLabel")}</span>
           </label>
 
-          <label className="flex min-h-11 cursor-pointer items-center gap-2.5 text-[13px]">
+          <label className="flex min-h-11 cursor-pointer items-center gap-2.5 text-[14px]">
             <input
               type="checkbox"
               role="switch"
@@ -156,7 +156,7 @@ export default function InputPanel({
             <span className="text-ink">
               {t("inputs.useLiveSofr")}
               {liveSofr != null && (
-                <span className="ml-1.5 text-muted">
+                <span className="ml-1.5 text-ink2">
                   {t("inputs.sofrSuffix", { rate: liveSofr.toFixed(2) })}
                 </span>
               )}
@@ -181,7 +181,7 @@ export default function InputPanel({
           type="button"
           onClick={onCompare}
           disabled={busy}
-          className="min-h-11 shrink-0 bg-ink px-8 text-[12px] font-medium uppercase tracking-eyebrow text-white transition-colors hover:bg-blue disabled:opacity-40"
+          className="min-h-12 shrink-0 bg-blue px-9 text-[14px] font-semibold text-white transition-colors hover:bg-blueDark disabled:opacity-40"
         >
           {busy ? `${t("inputs.comparing")}…` : t("inputs.compare")}
         </button>

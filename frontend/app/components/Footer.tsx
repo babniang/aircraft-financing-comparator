@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="mt-16 border-t border-rule">
       <div className="mx-auto max-w-shell px-5 py-8 sm:px-8">
-        <p className="max-w-2xl text-[12px] leading-relaxed text-muted">
+        <p className="max-w-2xl text-[13.5px] leading-relaxed text-ink2">
           {t("footer.disclaimer")}
         </p>
       </div>

@@ -73,7 +73,7 @@ export default function CashflowMatrix({ data }: { data: CompareResponse }) {
           </tbody>
         </table>
       </div>
-      <p className="mt-3 max-w-3xl text-[12px] leading-relaxed text-muted">
+      <p className="mt-3 max-w-3xl text-[13.5px] leading-relaxed text-ink2">
         {t("table.cashNote")}
       </p>
 
@@ -81,7 +81,7 @@ export default function CashflowMatrix({ data }: { data: CompareResponse }) {
         {cols.map((s) => (
           <div key={s}>
             <dt className="font-medium text-ink">{t(`structure.${s}`)}</dt>
-            <dd className="mt-1 text-muted">{t(`note.${s}`)}</dd>
+            <dd className="mt-1 text-ink2">{t(`note.${s}`)}</dd>
           </div>
         ))}
       </dl>

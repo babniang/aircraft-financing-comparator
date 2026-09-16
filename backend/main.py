@@ -186,3 +186,20 @@ def export_xlsx(req: CompareRequest) -> Response:
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
+
+
+# ---------------------------------------------------------------------------
+# Entrypoint. Railway (and most PaaS) inject $PORT. Reading it here in Python
+# rather than relying on shell expansion in the start command means the app
+# binds correctly whether or not the platform runs the command through a shell,
+# which is the difference between booting and a 502.
+# ---------------------------------------------------------------------------
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", "8000")),
+        log_level=os.environ.get("LOG_LEVEL", "info"),
+    )

@@ -13,16 +13,24 @@ import {
   RESUME_URL,
 } from "@/lib/config";
 
-function Link({ href, children }: { href: string; children: React.ReactNode }) {
+function Action({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex min-h-11 items-center border-b border-blue/30 text-[13px] text-blue transition-colors hover:border-blue hover:text-blueDark"
+      className="inline-flex min-h-11 items-center border border-ink px-5 text-[13px] font-medium text-ink transition-colors hover:bg-ink hover:text-white"
     >
       {children}
     </a>
+  );
+}
+
+function Divider() {
+  return (
+    <span aria-hidden className="mx-2.5 text-ruleStrong">
+      |
+    </span>
   );
 }
 
@@ -33,32 +41,28 @@ export default function Masthead() {
 
   return (
     <section className="border-b border-rule bg-surface">
-      <div className="mx-auto flex max-w-shell flex-col gap-5 px-5 py-7 sm:px-8 md:flex-row md:items-end md:justify-between">
+      <div className="mx-auto flex max-w-shell flex-col gap-6 px-5 py-8 sm:px-8 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="eyebrow">{t("id.by")}</p>
-          <p className="mt-2 text-[26px] font-light tracking-tight3 text-ink sm:text-[32px]">
+          <p className="mt-2 text-[30px] font-semibold leading-none tracking-tight2 text-ink sm:text-[36px]">
             {AUTHOR_NAME}
           </p>
-          <p className="mt-1.5 text-[14px] text-ink2">
+          <p className="mt-3 text-[15px] font-medium text-ink">
             {AUTHOR_SCHOOL}
-            <span aria-hidden className="mx-2 text-rule">
-              |
-            </span>
+            <Divider />
             {AUTHOR_PROGRAM}
           </p>
-          <p className="mt-1 text-[13px] text-muted">
+          <p className="mt-1 text-[15px] text-ink2">
             {AUTHOR_LICENCE}
-            <span aria-hidden className="mx-2 text-rule">
-              |
-            </span>
+            <Divider />
             {availability}
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-6">
-          <Link href={RESUME_URL}>{t("footer.resume")}</Link>
-          <Link href={LINKEDIN_URL}>LinkedIn</Link>
-          <Link href={GITHUB_URL}>{t("footer.source")}</Link>
+        <div className="flex flex-wrap items-center gap-3">
+          <Action href={RESUME_URL}>{t("footer.resume")}</Action>
+          <Action href={LINKEDIN_URL}>LinkedIn</Action>
+          <Action href={GITHUB_URL}>{t("footer.source")}</Action>
         </div>
       </div>
     </section>

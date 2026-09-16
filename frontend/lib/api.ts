@@ -22,15 +22,21 @@ export class ApiError extends Error {
 async function request<T>(
   path: string,
   init?: RequestInit,
-  timeoutMs = 8000,
+  timeoutMs = 25000,
 ): Promise<T> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
+    // Only set Content-Type when there is actually a body. Sending it on a GET
+    // makes the request non-simple, which forces a CORS preflight OPTIONS on
+    // every call, doubling the round trips against a cold backend for nothing.
+    const headers: Record<string, string> = { ...((init?.headers as Record<string, string>) ?? {}) };
+    if (init?.body != null) headers["Content-Type"] = "application/json";
+
     const res = await fetch(`${BASE_URL}${path}`, {
       ...init,
       signal: controller.signal,
-      headers: { "Content-Type": "application/json", ...(init?.headers ?? {}) },
+      headers,
     });
     if (!res.ok) {
       let detail = `Request failed (${res.status})`;
@@ -55,18 +61,18 @@ async function request<T>(
 }
 
 export function getReference(): Promise<ReferenceResponse> {
-  return request<ReferenceResponse>("/api/reference", { method: "GET" }, 8000);
+  return request<ReferenceResponse>("/api/reference", { method: "GET" }, 25000);
 }
 
 export function getMarketContext(): Promise<MarketContext> {
-  return request<MarketContext>("/api/market-context", { method: "GET" }, 8000);
+  return request<MarketContext>("/api/market-context", { method: "GET" }, 25000);
 }
 
 export function postCompare(body: CompareRequest): Promise<CompareResponse> {
   return request<CompareResponse>(
     "/api/compare",
     { method: "POST", body: JSON.stringify(body) },
-    12000,
+    25000,
   );
 }
 
@@ -76,7 +82,7 @@ export function postCompare(body: CompareRequest): Promise<CompareResponse> {
  */
 export async function downloadExcelModel(body: CompareRequest): Promise<void> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 20000);
+  const timer = setTimeout(() => controller.abort(), 40000);
   try {
     const res = await fetch(`${BASE_URL}/api/export.xlsx`, {
       method: "POST",

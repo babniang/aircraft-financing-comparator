@@ -9,12 +9,11 @@ export default function TopBanner() {
   return (
     <header className="sticky top-0 z-20 border-b border-rule bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-shell items-center justify-between gap-6 px-5 py-3 sm:px-8">
-        <span className="flex items-center gap-2.5 text-[12px] font-medium tracking-tight2 text-ink">
-          <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-blue" />
+        <span className="text-[13px] font-semibold tracking-tight2 text-ink">
           Aircraft Finance
         </span>
 
-        <nav className="hidden items-center gap-7 text-[12px] text-muted md:flex">
+        <nav className="hidden items-center gap-7 text-[13px] text-ink2 md:flex">
           <a href="#engine-risk" className="hover:text-ink">
             {t("nav.gtf")}
           </a>

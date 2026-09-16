@@ -9,18 +9,18 @@
      Tuned against sgmarkets.com / jpmorgan.com: white space does the work,
      weight stays light, and colour is used sparingly. */
   --c-white: #ffffff;
-  --c-surface: #fafbfc;
-  --c-ink: #0b0d0f;
-  --c-ink-2: #454c54;
-  --c-muted: #79828c;
+  --c-surface: #f8f9fa;
+  --c-ink: #000000;
+  --c-ink-2: #23282a;
+  --c-muted: #6e777a;
 
   --c-blue: #2a6bf2;
   --c-blue-dark: #1b4bc0;
   --c-blue-tint: #e3edff;
   --c-blue-pale: #f2f6ff;
 
-  --c-rule: #e6e9ed;
-  --c-rule-strong: #c9cfd6;
+  --c-rule: #dfe3e6;
+  --c-rule-strong: #b9c0c4;
   --c-neg: #c62828;
 
   --font-sans: var(--font-inter), "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -50,15 +50,15 @@ body {
 
 /* Big, light headlines. Weight never goes above 500 here on purpose. */
 h1 {
-  font-weight: 300;
-  letter-spacing: -0.032em;
-  line-height: 1.04;
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
   margin: 0;
 }
 h2 {
-  font-weight: 400;
-  letter-spacing: -0.022em;
-  line-height: 1.12;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   margin: 0;
 }
 h3 {
@@ -71,9 +71,9 @@ h3 {
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 600;
-  color: var(--c-muted);
+  color: var(--c-ink-2);
 }
 
 a {
@@ -99,11 +99,11 @@ a:hover {
   font-variant-numeric: tabular-nums lining-nums;
 }
 .tbl thead th {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--c-muted);
+  letter-spacing: 0.1em;
+  color: var(--c-ink-2);
   text-align: right;
   vertical-align: bottom;
   padding: 0 16px 10px;
@@ -111,7 +111,7 @@ a:hover {
   white-space: nowrap;
 }
 .tbl tbody td {
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 400;
   color: var(--c-ink);
   text-align: right;
@@ -140,7 +140,7 @@ a:hover {
 /* Leading row (cheapest structure). */
 .tbl tr.is-lead td {
   background: var(--c-blue-pale);
-  font-weight: 500;
+  font-weight: 600;
 }
 .tbl tr.is-lead td:first-child {
   box-shadow: inset 3px 0 0 var(--c-blue);

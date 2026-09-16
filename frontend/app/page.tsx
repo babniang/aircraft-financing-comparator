@@ -26,6 +26,7 @@ import GtfExplainer from "./components/GtfExplainer";
 import MethodologyAccordion from "./components/MethodologyAccordion";
 import LoadingState from "./components/LoadingState";
 import Footer from "./components/Footer";
+import ExcelIcon from "./components/ExcelIcon";
 
 const DEFAULT_REFERENCE_RATE = "3.8";
 
@@ -183,7 +184,7 @@ export default function Page() {
           <h1 className="mt-5 max-w-4xl text-[38px] text-ink sm:text-[56px]">
             {t("banner.title")}
           </h1>
-          <p className="mt-7 max-w-2xl text-[16px] leading-relaxed text-ink2 sm:text-[17px]">
+          <p className="mt-7 max-w-2xl text-[17px] leading-relaxed text-ink2 sm:text-[18px]">
             {t("banner.lead")}
           </p>
         </section>
@@ -226,7 +227,7 @@ export default function Page() {
                   {t("results.heading")}
                 </h2>
                 {hasResults && (
-                  <span className="text-[12px] text-muted">
+                  <span className="text-[13px] text-ink2">
                     {t("results.baseRate", {
                       rate: results!.reference_rate_pct_used.toFixed(2),
                     })}{" "}
@@ -250,24 +251,31 @@ export default function Page() {
                 <CreditMetricsTable data={results!} />
                 <CashflowMatrix data={results!} />
 
-                <div className="flex flex-col gap-4 border-t border-rule pt-8 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="text-[18px] font-light tracking-tight2 text-ink">{t("export.heading")}</p>
-                    <p className="mt-1.5 max-w-xl text-[13px] leading-relaxed text-muted">
-                      {t("export.body")}
-                    </p>
+                <div className="flex flex-col gap-5 border border-ink bg-surface p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+                  <div className="flex items-start gap-4">
+                    <ExcelIcon className="mt-0.5 h-9 w-9 shrink-0" />
+                    <div>
+                      <p className="text-[19px] font-semibold tracking-tight2 text-ink">
+                        {t("export.heading")}
+                      </p>
+                      <p className="mt-1.5 max-w-xl text-[14px] leading-relaxed text-ink2">
+                        {t("export.body")}
+                      </p>
+                    </div>
                   </div>
                   <button
                     type="button"
                     onClick={runExport}
                     disabled={exporting}
-                    className="min-h-11 shrink-0 border border-ink px-7 text-[12px] font-medium uppercase tracking-eyebrow text-ink transition-colors hover:border-blue hover:text-blue disabled:opacity-40"
+                    className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2.5 bg-ink px-7 text-[14px] font-semibold text-white transition-colors hover:bg-blue disabled:opacity-40"
                   >
+                    <ExcelIcon className="h-5 w-5" />
                     {exporting
                       ? `${t("export.preparing")}…`
                       : t("export.download")}
                   </button>
                 </div>
+
               </>
             )}
           </section>

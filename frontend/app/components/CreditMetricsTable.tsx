@@ -46,7 +46,7 @@ export default function CreditMetricsTable({ data }: { data: CompareResponse }) 
           </tbody>
         </table>
       </div>
-      <p className="mt-3 max-w-3xl text-[12px] leading-relaxed text-muted">
+      <p className="mt-3 max-w-3xl text-[13.5px] leading-relaxed text-ink2">
         {t("cm.note")}
       </p>
     </section>

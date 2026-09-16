@@ -6,16 +6,16 @@ const config: Config = {
     extend: {
       colors: {
         white: "#ffffff",
-        surface: "#fafbfc",
-        ink: "#0b0d0f",
-        ink2: "#454c54",
-        muted: "#79828c",
+        surface: "#f8f9fa",
+        ink: "#000000",
+        ink2: "#23282a",
+        muted: "#6e777a",
         blue: "#2a6bf2",
         blueDark: "#1b4bc0",
         blueTint: "#e3edff",
         bluePale: "#f2f6ff",
-        rule: "#e6e9ed",
-        ruleStrong: "#c9cfd6",
+        rule: "#dfe3e6",
+        ruleStrong: "#b9c0c4",
         neg: "#c62828",
       },
       fontFamily: {

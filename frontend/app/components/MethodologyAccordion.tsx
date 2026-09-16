@@ -29,7 +29,7 @@ export default function MethodologyAccordion({
       </button>
 
       {open && (
-        <div className="grid gap-x-12 gap-y-7 pb-10 text-[13.5px] leading-relaxed text-ink2 md:grid-cols-2">
+        <div className="grid gap-x-12 gap-y-7 pb-10 text-[14px] leading-relaxed text-ink2 md:grid-cols-2">
           <p className="md:col-span-2 max-w-3xl">{t("method.metric")}</p>
 
           <div>
