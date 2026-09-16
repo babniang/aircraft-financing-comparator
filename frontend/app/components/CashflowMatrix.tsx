@@ -19,11 +19,8 @@ export default function CashflowMatrix({ data }: { data: CompareResponse }) {
 
   const byStructure = new Map(data.results.map((r) => [r.structure, r]));
   const cols = ORDER.filter((s) => byStructure.has(s));
-
   const years = Array.from(
-    new Set(
-      data.results.flatMap((r) => r.cashflow_schedule.map((p) => p.year)),
-    ),
+    new Set(data.results.flatMap((r) => r.cashflow_schedule.map((p) => p.year))),
   ).sort((a, b) => a - b);
 
   const cell = (s: StructureId, year: number): number | null => {
@@ -32,10 +29,10 @@ export default function CashflowMatrix({ data }: { data: CompareResponse }) {
   };
 
   return (
-    <div>
-      <p className="eyebrow mb-2 text-blue700">{t("table.cashTitle")}</p>
+    <section>
+      <h2 className="mb-6 text-[20px] text-ink sm:text-[24px]">{t("table.cashTitle")}</h2>
       <div className="overflow-x-auto">
-        <table className="xl">
+        <table className="tbl">
           <thead>
             <tr>
               <th>{t("table.year")}</th>
@@ -50,7 +47,12 @@ export default function CashflowMatrix({ data }: { data: CompareResponse }) {
                 <td>{year}</td>
                 {cols.map((s) => {
                   const v = cell(s, year);
-                  if (v == null) return <td key={s} className="muted">–</td>;
+                  if (v == null)
+                    return (
+                      <td key={s} className="muted">
+                        &ndash;
+                      </td>
+                    );
                   const f = acc(v);
                   return (
                     <td key={s} className={f.neg ? "neg" : undefined}>
@@ -60,7 +62,7 @@ export default function CashflowMatrix({ data }: { data: CompareResponse }) {
                 })}
               </tr>
             ))}
-            <tr className="xl-total">
+            <tr className="is-total">
               <td>{t("table.irr")}</td>
               {cols.map((s) => (
                 <td key={s}>
@@ -71,18 +73,18 @@ export default function CashflowMatrix({ data }: { data: CompareResponse }) {
           </tbody>
         </table>
       </div>
-      <p className="mt-2 max-w-3xl text-[12px] leading-relaxed text-slate">
+      <p className="mt-3 max-w-3xl text-[12px] leading-relaxed text-muted">
         {t("table.cashNote")}
       </p>
 
-      <dl className="mt-4 grid gap-x-6 gap-y-2 text-[13px] leading-relaxed sm:grid-cols-3">
+      <dl className="mt-6 grid gap-x-10 gap-y-4 border-t border-rule pt-6 text-[13px] leading-relaxed sm:grid-cols-2 lg:grid-cols-4">
         {cols.map((s) => (
           <div key={s}>
-            <dt className="font-semibold text-ink">{t(`structure.${s}`)}</dt>
-            <dd className="text-slate">{t(`note.${s}`)}</dd>
+            <dt className="font-medium text-ink">{t(`structure.${s}`)}</dt>
+            <dd className="mt-1 text-muted">{t(`note.${s}`)}</dd>
           </div>
         ))}
       </dl>
-    </div>
+    </section>
   );
 }

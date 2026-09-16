@@ -1,14 +1,14 @@
 export default function LoadingState() {
   return (
-    <div className="border border-rule" aria-busy="true" aria-live="polite">
-      <div className="border-b border-rule bg-blue050 px-4 py-1.5">
-        <span className="eyebrow text-blue700">···</span>
-      </div>
-      <div className="animate-pulse space-y-2 p-4">
-        {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="h-6 w-full bg-blue050" />
-        ))}
-      </div>
+    <div className="animate-pulse" aria-busy="true" aria-live="polite">
+      <div className="h-px w-full bg-ink" />
+      {[0, 1, 2, 3].map((i) => (
+        <div key={i} className="flex gap-4 border-b border-rule py-4">
+          <div className="h-3.5 w-1/3 bg-rule" />
+          <div className="ml-auto h-3.5 w-16 bg-rule" />
+          <div className="h-3.5 w-16 bg-rule" />
+        </div>
+      ))}
     </div>
   );
 }

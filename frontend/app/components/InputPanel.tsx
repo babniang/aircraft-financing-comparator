@@ -14,6 +14,10 @@ export interface FormState {
   referenceRatePct: string;
 }
 
+const FIELD =
+  "min-h-11 w-full border-0 border-b border-rule bg-transparent px-0 pb-1.5 text-[16px] font-light text-ink outline-none transition-colors focus:border-blue";
+const LABEL = "eyebrow block";
+
 export default function InputPanel({
   aircraft,
   form,
@@ -43,24 +47,16 @@ export default function InputPanel({
 
   const selected = aircraft.find((a) => a.id === form.aircraftId);
 
-  const field =
-    "min-h-11 w-full rounded-gs border border-rule bg-white px-2.5 text-[14px] text-ink outline-none focus:border-blue500 focus:ring-1 focus:ring-blue500";
-  const label = "mb-1 block eyebrow";
-
   return (
-    <div className="border border-rule bg-white">
-      <div className="border-b border-rule bg-blue050 px-4 py-1.5">
-        <span className="eyebrow text-blue700">{t("inputs.heading")}</span>
-      </div>
-
-      <div className="grid gap-x-5 gap-y-4 p-4 lg:grid-cols-12">
-        <div className="lg:col-span-5">
-          <label htmlFor="aircraft" className={label}>
+    <div>
+      <div className="grid gap-x-10 gap-y-7 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <label htmlFor="aircraft" className={LABEL}>
             {t("inputs.aircraftType")}
           </label>
           <select
             id="aircraft"
-            className={field}
+            className={FIELD}
             value={form.aircraftId}
             onChange={(e) => onSelectAircraft(e.target.value)}
           >
@@ -81,13 +77,11 @@ export default function InputPanel({
               ))}
             </optgroup>
           </select>
-          <p className="mt-1 h-4 text-[12px] text-slate">
-            {selected?.operator || ""}
-          </p>
+          <p className="mt-2 h-4 text-[12px] text-muted">{selected?.operator || ""}</p>
         </div>
 
-        <div className="lg:col-span-2">
-          <label htmlFor="delivery" className={label}>
+        <div className="md:col-span-2">
+          <label htmlFor="delivery" className={LABEL}>
             {t("inputs.deliveryPrice")}
           </label>
           <input
@@ -97,14 +91,14 @@ export default function InputPanel({
             min={1}
             max={1000}
             step={1}
-            className={field}
+            className={FIELD}
             value={form.deliveryPrice}
             onChange={(e) => onChange("deliveryPrice", e.target.value)}
           />
         </div>
 
-        <div className="lg:col-span-2">
-          <label htmlFor="market" className={label}>
+        <div className="md:col-span-2">
+          <label htmlFor="market" className={LABEL}>
             {t("inputs.marketValue")}
           </label>
           <input
@@ -114,14 +108,14 @@ export default function InputPanel({
             min={1}
             max={1000}
             step={1}
-            className={field}
+            className={FIELD}
             value={form.marketValue}
             onChange={(e) => onChange("marketValue", e.target.value)}
           />
         </div>
 
-        <div className="lg:col-span-3">
-          <label htmlFor="tenor" className={label}>
+        <div className="md:col-span-3">
+          <label htmlFor="tenor" className={LABEL}>
             {t("inputs.tenor")}
           </label>
           <input
@@ -131,64 +125,63 @@ export default function InputPanel({
             min={1}
             max={25}
             step={1}
-            className={`${field} max-w-[6rem]`}
+            className={FIELD}
             value={form.tenorYears}
             onChange={(e) => onChange("tenorYears", e.target.value)}
           />
         </div>
       </div>
 
-      <div className="grid gap-3 border-t border-rule p-4 md:grid-cols-[1fr_1fr_auto] md:items-center">
-        <label className="flex min-h-11 cursor-pointer items-center gap-2.5 text-[13px]">
-          <input
-            type="checkbox"
-            role="switch"
-            className="h-4 w-4 accent-blue500"
-            checked={form.gtfAdjustment}
-            onChange={(e) => onChange("gtfAdjustment", e.target.checked)}
-          />
-          <span className="text-ink">
-            {t("inputs.gtfLabel")}{" "}
-            <span className="text-slate">{t("inputs.gtfHint")}</span>
-          </span>
-        </label>
-
-        <label className="flex min-h-11 cursor-pointer items-center gap-2.5 border-l border-rule pl-3 text-[13px] md:pl-4">
-          <input
-            type="checkbox"
-            role="switch"
-            className="h-4 w-4 accent-blue500"
-            checked={form.useLiveSofr}
-            onChange={(e) => onChange("useLiveSofr", e.target.checked)}
-          />
-          <span className="text-ink">
-            {t("inputs.useLiveSofr")}
-            {liveSofr != null && (
-              <span className="ml-1 text-slate">
-                {t("inputs.sofrSuffix", { rate: liveSofr.toFixed(2) })}
-              </span>
-            )}
-          </span>
-          {!form.useLiveSofr && (
+      <div className="mt-8 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+          <label className="flex min-h-11 cursor-pointer items-center gap-2.5 text-[13px]">
             <input
-              aria-label={t("inputs.referenceRate")}
-              type="number"
-              inputMode="decimal"
-              min={0}
-              max={20}
-              step={0.05}
-              className="ml-1 min-h-11 w-20 rounded-gs border border-rule px-2 text-[13px] outline-none focus:border-blue500"
-              value={form.referenceRatePct}
-              onChange={(e) => onChange("referenceRatePct", e.target.value)}
+              type="checkbox"
+              role="switch"
+              className="h-4 w-4 accent-blue"
+              checked={form.gtfAdjustment}
+              onChange={(e) => onChange("gtfAdjustment", e.target.checked)}
             />
-          )}
-        </label>
+            <span className="text-ink">{t("inputs.gtfLabel")}</span>
+          </label>
+
+          <label className="flex min-h-11 cursor-pointer items-center gap-2.5 text-[13px]">
+            <input
+              type="checkbox"
+              role="switch"
+              className="h-4 w-4 accent-blue"
+              checked={form.useLiveSofr}
+              onChange={(e) => onChange("useLiveSofr", e.target.checked)}
+            />
+            <span className="text-ink">
+              {t("inputs.useLiveSofr")}
+              {liveSofr != null && (
+                <span className="ml-1.5 text-muted">
+                  {t("inputs.sofrSuffix", { rate: liveSofr.toFixed(2) })}
+                </span>
+              )}
+            </span>
+            {!form.useLiveSofr && (
+              <input
+                aria-label={t("inputs.referenceRate")}
+                type="number"
+                inputMode="decimal"
+                min={0}
+                max={20}
+                step={0.05}
+                className="ml-1 min-h-11 w-20 border-0 border-b border-rule bg-transparent px-0 text-[14px] outline-none focus:border-blue"
+                value={form.referenceRatePct}
+                onChange={(e) => onChange("referenceRatePct", e.target.value)}
+              />
+            )}
+          </label>
+        </div>
 
         <button
           type="button"
           onClick={onCompare}
           disabled={busy}
-          className="min-h-11 rounded-gs bg-blue700 px-6 text-[12px] font-semibold uppercase tracking-eyebrow text-white transition-colors hover:bg-blue900 disabled:opacity-50"
+          className="min-h-11 shrink-0 bg-ink px-8 text-[12px] font-medium uppercase tracking-eyebrow text-white transition-colors hover:bg-blue disabled:opacity-40"
         >
           {busy ? `${t("inputs.comparing")}…` : t("inputs.compare")}
         </button>

@@ -5,27 +5,25 @@
 :root {
   color-scheme: light;
 
-  --c-bg: #ffffff;
-  --c-ink: #0d1b2a;
-  --c-ink-soft: #2b3b4d;
-  --c-slate: #52657a;
-  --c-blue-900: #0a2540;
-  --c-blue-700: #0a4c8b;
-  --c-blue-500: #1666c8;
-  --c-blue-100: #e6eef8;
-  --c-blue-050: #f4f8fc;
-  --c-rule: #c3d0e0;
-  --c-rule-strong: #9db2cc;
-  --c-neg: #b3261e;
-  --r: 2px;
+  /* Brighter white ground, near-black text, one lighter blue accent.
+     Tuned against sgmarkets.com / jpmorgan.com: white space does the work,
+     weight stays light, and colour is used sparingly. */
+  --c-white: #ffffff;
+  --c-surface: #fafbfc;
+  --c-ink: #0b0d0f;
+  --c-ink-2: #454c54;
+  --c-muted: #79828c;
 
-  /* goldmansachs.com styles its visible text with "GS Sans", falling back to
-     Helvetica / Arial / sans-serif. That is the stack used here; GS Sans is a
-     custom face not on any public CDN, so it is not bundled and the fallback
-     (Helvetica Neue / Helvetica / Arial) carries the design. */
-  --font-sans: "GS Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-mono: "SFMono-Regular", ui-monospace, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
+  --c-blue: #2a6bf2;
+  --c-blue-dark: #1b4bc0;
+  --c-blue-tint: #e3edff;
+  --c-blue-pale: #f2f6ff;
+
+  --c-rule: #e6e9ed;
+  --c-rule-strong: #c9cfd6;
+  --c-neg: #c62828;
+
+  --font-sans: var(--font-inter), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 html {
@@ -36,118 +34,139 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--c-bg);
+  background: var(--c-white);
   color: var(--c-ink);
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   font-family: var(--font-sans);
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.55;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
-h1,
-h2,
+/* Big, light headlines. Weight never goes above 500 here on purpose. */
+h1 {
+  font-weight: 300;
+  letter-spacing: -0.032em;
+  line-height: 1.04;
+  margin: 0;
+}
+h2 {
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  line-height: 1.12;
+  margin: 0;
+}
 h3 {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  margin: 0;
 }
 
-/* Micro label: uppercase, tracked, small. */
+/* Micro label. */
 .eyebrow {
-  font-family: var(--font-sans);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: var(--c-slate);
-}
-
-.mono {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.14em;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--c-muted);
 }
 
 a {
-  color: var(--c-blue-500);
+  color: var(--c-blue);
   text-decoration: none;
 }
 a:hover {
-  text-decoration: underline;
+  color: var(--c-blue-dark);
 }
 
 ::selection {
-  background: #cfe0f7;
+  background: var(--c-blue-tint);
 }
 
 /* ------------------------------------------------------------------ *
- * Excel-style data grid
+ * Data table. No vertical rules, no outer box, no zebra: horizontal
+ * separators and alignment carry the structure, the way a real tear
+ * sheet does.
  * ------------------------------------------------------------------ */
-.xl {
-  border-collapse: collapse;
+.tbl {
   width: 100%;
-  font-variant-numeric: tabular-nums;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums lining-nums;
 }
-.xl th,
-.xl td {
-  border: 1px solid var(--c-rule);
-  padding: 6px 10px;
-  white-space: nowrap;
-}
-.xl thead th {
-  background: var(--c-blue-100);
-  font-family: var(--font-sans);
+.tbl thead th {
+  font-size: 10px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: var(--c-blue-700);
+  letter-spacing: 0.12em;
+  color: var(--c-muted);
   text-align: right;
   vertical-align: bottom;
+  padding: 0 16px 10px;
+  border-bottom: 1px solid var(--c-ink);
+  white-space: nowrap;
 }
-.xl thead th:first-child {
-  text-align: left;
-}
-.xl tbody td {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  text-align: right;
-  color: var(--c-ink);
-}
-.xl tbody th,
-.xl tbody td:first-child {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  text-align: left;
+.tbl tbody td {
+  font-size: 14px;
   font-weight: 400;
   color: var(--c-ink);
+  text-align: right;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--c-rule);
+  white-space: nowrap;
 }
-.xl tbody tr:nth-child(even) {
-  background: var(--c-blue-050);
+/* First column is the row label: left aligned, flush, slightly indented so a
+   highlight bar has somewhere to sit. */
+.tbl thead th:first-child,
+.tbl tbody td:first-child {
+  text-align: left;
+  padding-left: 12px;
 }
-.xl tr.xl-hi > * {
-  background: var(--c-blue-100);
-  font-weight: 700;
+.tbl thead th:last-child,
+.tbl tbody td:last-child {
+  padding-right: 0;
 }
-.xl tr.xl-total > * {
-  border-top: 2px solid var(--c-rule-strong);
-  font-weight: 700;
+.tbl tbody tr:last-child td {
+  border-bottom: none;
 }
-.xl .neg {
+.tbl tbody tr:hover td {
+  background: var(--c-blue-pale);
+}
+
+/* Leading row (cheapest structure). */
+.tbl tr.is-lead td {
+  background: var(--c-blue-pale);
+  font-weight: 500;
+}
+.tbl tr.is-lead td:first-child {
+  box-shadow: inset 3px 0 0 var(--c-blue);
+}
+.tbl tr.is-lead td.metric {
+  color: var(--c-blue);
+}
+
+/* Summation / IRR row. */
+.tbl tr.is-total td {
+  border-top: 1px solid var(--c-ink);
+  border-bottom: none;
+  font-weight: 500;
+  padding-top: 13px;
+}
+
+.tbl .neg {
   color: var(--c-neg);
 }
-.xl .muted {
-  color: var(--c-slate);
+.tbl .muted {
+  color: var(--c-muted);
 }
-/* text (non-numeric) column: sans, left-aligned even in the body */
-.xl th.txt,
-.xl td.txt {
-  font-family: var(--font-sans);
+/* Non-numeric column: left aligned in the body too. */
+.tbl th.txt,
+.tbl td.txt {
   text-align: left;
-  font-size: 13px;
 }
 
 /* Native number inputs: hide spinners, keep the mobile numeric keypad. */

@@ -13,29 +13,33 @@ export default function MethodologyAccordion({
   const [open, setOpen] = useState(false);
 
   return (
-    <section id="methodology" className="scroll-mt-16 border border-rule">
+    <section id="methodology" className="scroll-mt-20 border-t border-rule">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="flex min-h-11 w-full items-center justify-between bg-blue050 px-4 text-left"
+        className="flex min-h-11 w-full items-center justify-between gap-4 py-6 text-left"
       >
-        <span className="eyebrow text-blue700">{t("method.heading")}</span>
-        <span className="mono text-[13px] text-slate">{open ? "−" : "+"}</span>
+        <span className="text-[18px] font-light tracking-tight2 text-ink sm:text-[22px]">
+          {t("method.heading")}
+        </span>
+        <span aria-hidden className="text-[20px] font-light text-muted">
+          {open ? "−" : "+"}
+        </span>
       </button>
 
       {open && (
-        <div className="space-y-4 border-t border-rule p-4 text-[13.5px] leading-relaxed text-inkSoft sm:p-6">
-          <p>{t("method.metric")}</p>
+        <div className="grid gap-x-12 gap-y-7 pb-10 text-[13.5px] leading-relaxed text-ink2 md:grid-cols-2">
+          <p className="md:col-span-2 max-w-3xl">{t("method.metric")}</p>
 
           <div>
-            <p className="font-semibold text-ink">{t("method.liveHeading")}</p>
+            <p className="eyebrow mb-2">{t("method.liveHeading")}</p>
             <p>{t("method.liveBody")}</p>
           </div>
 
           <div>
-            <p className="font-semibold text-ink">{t("method.sourcedHeading")}</p>
-            <ul className="ml-4 list-disc space-y-1">
+            <p className="eyebrow mb-2">{t("method.sourcedHeading")}</p>
+            <ul className="space-y-1.5">
               <li>{t("method.sourced1")}</li>
               <li>{t("method.sourced2")}</li>
               <li>{t("method.sourced3")}</li>
@@ -43,15 +47,13 @@ export default function MethodologyAccordion({
             </ul>
           </div>
 
-          <div>
-            <p className="font-semibold text-ink">
-              {t("method.notModelledHeading")}
-            </p>
-            <p>{t("method.notModelledBody")}</p>
+          <div className="md:col-span-2">
+            <p className="eyebrow mb-2">{t("method.notModelledHeading")}</p>
+            <p className="max-w-3xl">{t("method.notModelledBody")}</p>
           </div>
 
           {reference && (
-            <p className="pt-1 text-[12px] text-slate">
+            <p className="md:col-span-2 text-[12px] text-muted">
               {t("method.refData", {
                 version: reference.version,
                 note: reference.sources_note,

@@ -17,7 +17,7 @@ const EN: Dict = {
   "banner.eyebrow": "Debt Capital Markets / Aircraft Finance",
   "banner.title": "Aircraft Financing Structure Comparator",
   "banner.lead":
-    "The implied all-in annual cost of four structures a debt-structuring desk actually originates: ECA-backed debt, a sustainability-linked loan, a Japanese tax lease (JOLCO), and a sale-and-leaseback. Balance-sheet treatment, credit metrics and an optional engine-risk adjustment are shown alongside.",
+    "Four structures a debt desk actually originates, priced on one comparable basis: the IRR of each one's incremental cash flows against paying cash.",
 
   "nav.method": "Methodology",
   "nav.gtf": "Engine risk",
@@ -74,7 +74,7 @@ const EN: Dict = {
   "cm.wal": "WAL (yrs)",
   "cm.balloon": "Balloon",
   "cm.note":
-    "Aircraft-level proxies (the tool has no airline financials). LTV is against market value; mid-life uses a straight-line depreciation curve. Asset DSCR is the airframe's lease-earning power over the annual financing outflow. Balloon is the share of the financed amount due as a lump at maturity or the JOLCO call.",
+    "Aircraft-level proxies. LTV is against market value; mid-life uses a straight-line depreciation curve. Asset DSCR is the airframe's lease-earning power over the annual financing outflow.",
 
   "badge.onBalance": "On balance sheet",
   "badge.offBalance": "Off balance sheet",
@@ -85,21 +85,21 @@ const EN: Dict = {
 
   "export.heading": "Full working model",
   "export.body":
-    "Excel workbook: assumptions, an amortisation schedule per structure, and a comparison tab. Built with live formulas (PMT, IRR, NPV), so every input stays editable in Excel.",
+    "Assumptions, an amortisation schedule per structure, and a comparison tab. Live formulas throughout, so every input stays editable.",
   "export.download": "Download Excel model",
   "export.preparing": "Preparing",
 
   "gtf.heading": "What the engine-risk adjustment reflects",
   "gtf.p1":
-    "GTF is the Pratt & Whitney Geared Turbofan (PW1000G), the engine on much of the A320neo family, the A220 and the Embraer E2. In 2023 its maker disclosed a powder-metal manufacturing flaw: contamination in the metal used for high-pressure turbine and compressor discs can seed micro-cracks and cut the parts' safe life.",
+    "GTF is Pratt & Whitney's Geared Turbofan, the engine on much of the A320neo family, the A220 and the Embraer E2. In 2023 a powder-metal defect was disclosed: contamination in high-pressure turbine and compressor discs can seed micro-cracks and cut their safe life.",
   "gtf.p2":
-    "That triggered an accelerated inspection and removal campaign running into 2026. Several hundred aircraft have been grounded at a time, shop-visit turnaround has stretched past 250 to 300 days, and the manufacturer has taken multi-billion-dollar charges to compensate operators.",
+    "The removal campaign runs into 2026. Several hundred aircraft have been grounded at a time, shop visits stretch past 250 days, and the manufacturer has taken multi-billion-dollar charges.",
   "gtf.p3":
-    "For a financing, that means lower availability, higher maintenance reserves and a softer resale bid on GTF-powered metal. The adjustment here adds a margin premium to the debt structures and a haircut to the sale price and residual value in the sale-and-leaseback.",
+    "For a financing: lower availability, higher maintenance reserves, a softer resale bid. The adjustment adds a margin premium to the debt structures and a haircut to the sale price and residual in the sale-and-leaseback.",
 
   "method.heading": "Methodology and assumptions",
   "method.metric":
-    "The comparator runs an IRR over each structure's incremental cash flows relative to paying the full delivery price in cash at year 0. Because that baseline is common to all three, the implied annual costs are directly comparable even though the structures finance different percentages of the aircraft.",
+    "The comparator runs an IRR over each structure's incremental cash flows relative to paying the full delivery price in cash at year 0. That baseline is common to all four, so the implied annual costs are directly comparable even though the structures finance different percentages of the aircraft.",
   "method.liveHeading": "Genuinely live data",
   "method.liveBody":
     "SOFR (Federal Reserve Bank of New York), €STR (ECB Data Portal), AF.PA share price and EUR/USD (Yahoo public feed, unofficial, labelled as such). Live SOFR flows into the model when the toggle is on.",
@@ -132,12 +132,13 @@ const EN: Dict = {
 
   "footer.builtBy": "Built by",
   "footer.resume": "Resume",
-  "footer.source": "Source code",
+  "footer.source": "GitHub",
   "footer.disclaimer":
-    "Indicative model for structure comparison. Not a valuation and not investment advice. Source, tests and methodology are in the repository.",
+    "Indicative model for structure comparison. Not a valuation and not investment advice.",
 
   "lang.switch": "FR",
   "lang.current": "EN",
+  "id.by": "Independent project by",
 
   "inputs.groupAfklm": "Air France-KLM group fleet",
   "inputs.groupOther": "Other financed types",
@@ -156,7 +157,7 @@ const EN: Dict = {
   "table.year": "Year",
   "table.irr": "Implied annual cost (IRR)",
   "table.cashNote":
-    "Each column is the structure's cash flow minus paying the full delivery price in cash at year 0. Outflows in parentheses.",
+    "Each column is that structure's cash flow minus paying the full delivery price in cash at year 0. Outflows in parentheses.",
   "table.na": "n/a",
 };
 
@@ -164,7 +165,7 @@ const FR: Dict = {
   "banner.eyebrow": "Marchés de Dette / Financement Aéronautique",
   "banner.title": "Comparateur de Structures de Financement d'Avions",
   "banner.lead":
-    "Le coût annuel implicite tout compris de quatre structures qu'un desk de structuration de dette met réellement en place : dette garantie par une agence de crédit export, prêt indexé sur la durabilité, crédit-bail fiscal japonais (JOLCO) et cession-bail. Le traitement au bilan, les métriques de crédit et un ajustement optionnel lié au risque moteur sont affichés en regard.",
+    "Quatre structures qu'un desk de dette met réellement en place, comparées sur une base unique : le TRI des flux différentiels de chacune face à un paiement comptant.",
 
   "nav.method": "Méthodologie",
   "nav.gtf": "Risque moteur",
@@ -221,7 +222,7 @@ const FR: Dict = {
   "cm.wal": "Durée de vie moyenne (ans)",
   "cm.balloon": "Balloon",
   "cm.note":
-    "Approximations au niveau de l'avion (l'outil n'a pas les comptes de la compagnie). La LTV est rapportée à la valeur de marché ; à mi-vie elle utilise une dépréciation linéaire. Le DSCR actif rapporte la capacité locative de la cellule au décaissement annuel de financement. Le balloon est la part du montant financé due en une fois à l'échéance ou au call JOLCO.",
+    "Approximations au niveau de l'avion. La LTV est rapportée à la valeur de marché ; à mi-vie elle suit une dépréciation linéaire. Le DSCR actif rapporte la capacité locative de la cellule au décaissement annuel.",
 
   "badge.onBalance": "Au bilan",
   "badge.offBalance": "Hors bilan",
@@ -232,21 +233,21 @@ const FR: Dict = {
 
   "export.heading": "Modèle complet",
   "export.body":
-    "Classeur Excel : hypothèses, un échéancier d'amortissement par structure et un onglet de comparaison. Conçu avec des formules vivantes (PMT, TRI, VAN), donc chaque paramètre reste modifiable dans Excel.",
+    "Hypothèses, un échéancier par structure et un onglet de comparaison. Formules vivantes, chaque paramètre reste modifiable.",
   "export.download": "Télécharger le modèle Excel",
   "export.preparing": "Préparation",
 
   "gtf.heading": "Ce que reflète l'ajustement lié au risque moteur",
   "gtf.p1":
-    "Le GTF est le Geared Turbofan de Pratt & Whitney (PW1000G), le moteur d'une large partie de la famille A320neo, de l'A220 et de l'Embraer E2. En 2023, son constructeur a révélé un défaut de fabrication lié à la métallurgie des poudres : une contamination du métal des disques de turbine et de compresseur haute pression peut amorcer des micro-fissures et réduire la durée de vie sûre des pièces.",
+    "Le GTF est le Geared Turbofan de Pratt & Whitney, moteur d'une large partie de la famille A320neo, de l'A220 et de l'Embraer E2. En 2023, un défaut de métallurgie des poudres a été révélé : une contamination des disques haute pression peut amorcer des micro-fissures et réduire leur durée de vie.",
   "gtf.p2":
-    "Cela a déclenché une campagne accélérée d'inspections et de déposes qui court jusqu'en 2026. Plusieurs centaines d'avions ont été immobilisés simultanément, les délais d'atelier dépassent 250 à 300 jours, et le constructeur a passé des provisions de plusieurs milliards de dollars pour indemniser les opérateurs.",
+    "La campagne de dépose court jusqu'en 2026. Plusieurs centaines d'avions immobilisés simultanément, des passages en atelier au-delà de 250 jours, et des provisions de plusieurs milliards de dollars.",
   "gtf.p3":
-    "Pour un financement, cela signifie une disponibilité moindre, des réserves de maintenance plus élevées et une valeur de revente affaiblie pour les appareils équipés de GTF. L'ajustement ajoute ici une prime de marge aux structures de dette et une décote sur le prix de vente et la valeur résiduelle dans la cession-bail.",
+    "Pour un financement : disponibilité moindre, réserves de maintenance plus élevées, valeur de revente affaiblie. L'ajustement ajoute une prime de marge aux structures de dette et une décote au prix de vente et à la résiduelle de la cession-bail.",
 
   "method.heading": "Méthodologie et hypothèses",
   "method.metric":
-    "Le comparateur calcule un TRI sur les flux différentiels de chaque structure par rapport à un paiement comptant intégral du prix de livraison en année 0. Cette référence étant commune aux trois, les coûts annuels implicites sont directement comparables même si les structures financent des pourcentages différents de l'avion.",
+    "Le comparateur calcule un TRI sur les flux différentiels de chaque structure par rapport à un paiement comptant intégral du prix de livraison en année 0. Cette référence étant commune aux quatre, les coûts annuels implicites sont directement comparables même si les structures financent des pourcentages différents de l'avion.",
   "method.liveHeading": "Données réellement en direct",
   "method.liveBody":
     "SOFR (Federal Reserve Bank of New York), €STR (portail de données de la BCE), cours AF.PA et EUR/USD (flux public Yahoo, non officiel, signalé comme tel). Le SOFR en direct alimente le modèle lorsque l'option est activée.",
@@ -280,12 +281,13 @@ const FR: Dict = {
 
   "footer.builtBy": "Réalisé par",
   "footer.resume": "CV",
-  "footer.source": "Code source",
+  "footer.source": "GitHub",
   "footer.disclaimer":
-    "Modèle indicatif de comparaison de structures. Ni une valorisation ni un conseil en investissement. Source, tests et méthodologie dans le dépôt.",
+    "Modèle indicatif de comparaison de structures. Ni une valorisation ni un conseil en investissement.",
 
   "lang.switch": "EN",
   "lang.current": "FR",
+  "id.by": "Projet indépendant de",
 
   "inputs.groupAfklm": "Flotte du groupe Air France-KLM",
   "inputs.groupOther": "Autres types financés",
@@ -304,7 +306,7 @@ const FR: Dict = {
   "table.year": "Année",
   "table.irr": "Coût annuel implicite (TRI)",
   "table.cashNote":
-    "Chaque colonne correspond au flux de la structure moins le paiement comptant intégral du prix de livraison en année 0. Décaissements entre parenthèses.",
+    "Chaque colonne correspond au flux de la structure moins un paiement comptant intégral en année 0. Décaissements entre parenthèses.",
   "table.na": "n/d",
 };
 

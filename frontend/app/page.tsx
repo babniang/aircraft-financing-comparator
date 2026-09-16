@@ -16,6 +16,7 @@ import type {
   ReferenceResponse,
 } from "@/lib/types";
 import TopBanner from "./components/TopBanner";
+import Masthead from "./components/Masthead";
 import MarketContextStrip from "./components/MarketContextStrip";
 import InputPanel, { type FormState } from "./components/InputPanel";
 import ResultsTable from "./components/ResultsTable";
@@ -173,20 +174,22 @@ export default function Page() {
   return (
     <>
       <TopBanner />
+      <Masthead />
       <MarketContextStrip data={market} loading={marketLoading} />
 
-      <main className="mx-auto max-w-shell px-4 sm:px-6">
-        <section className="border-b border-rule py-8 sm:py-10">
+      <main className="mx-auto max-w-shell px-5 sm:px-8">
+        <section className="py-14 sm:py-20">
           <p className="eyebrow">{t("banner.eyebrow")}</p>
-          <h1 className="mt-2 max-w-3xl text-[24px] leading-[1.14] text-ink sm:text-[36px]">
+          <h1 className="mt-5 max-w-4xl text-[38px] text-ink sm:text-[56px]">
             {t("banner.title")}
           </h1>
-          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-inkSoft sm:text-[16px]">
+          <p className="mt-7 max-w-2xl text-[16px] leading-relaxed text-ink2 sm:text-[17px]">
             {t("banner.lead")}
           </p>
         </section>
 
-        <section className="py-6">
+        <section className="border-t border-rule pt-10">
+          <p className="eyebrow mb-7">{t("inputs.heading")}</p>
           {reference ? (
             <InputPanel
               aircraft={reference.aircraft}
@@ -198,16 +201,16 @@ export default function Page() {
               busy={busy}
             />
           ) : (
-            <p className="text-[13px] text-slate">{t("loading.inputs")}</p>
+            <p className="text-[13px] text-muted">{t("loading.inputs")}</p>
           )}
 
           {error && (
-            <div className="mt-3 border-l-2 border-neg bg-blue050 p-2.5 text-[13px] text-ink">
+            <div className="mt-6 border-l-2 border-neg py-1 pl-4 text-[13px] text-ink">
               {error}
               <button
                 type="button"
                 onClick={runCompare}
-                className="ml-2 min-h-11 font-semibold text-blue500 underline"
+                className="ml-2 min-h-11 text-blue underline"
               >
                 {t("error.tryAgain")}
               </button>
@@ -216,12 +219,14 @@ export default function Page() {
         </section>
 
         {(busy && !hasResults) || hasResults ? (
-          <section className="space-y-6 pb-2">
+          <section className="mt-16 space-y-14">
             <div>
-              <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <p className="eyebrow text-blue700">{t("results.heading")}</p>
+              <div className="mb-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+                <h2 className="text-[24px] text-ink sm:text-[30px]">
+                  {t("results.heading")}
+                </h2>
                 {hasResults && (
-                  <span className="mono text-[11.5px] text-slate">
+                  <span className="text-[12px] text-muted">
                     {t("results.baseRate", {
                       rate: results!.reference_rate_pct_used.toFixed(2),
                     })}{" "}
@@ -243,15 +248,12 @@ export default function Page() {
             {hasResults && (
               <>
                 <CreditMetricsTable data={results!} />
-
                 <CashflowMatrix data={results!} />
 
-                <div className="flex flex-col gap-2 border border-rule p-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col gap-4 border-t border-rule pt-8 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="text-[13.5px] font-semibold text-ink">
-                      {t("export.heading")}
-                    </p>
-                    <p className="mt-0.5 max-w-2xl text-[12px] leading-relaxed text-slate">
+                    <p className="text-[18px] font-light tracking-tight2 text-ink">{t("export.heading")}</p>
+                    <p className="mt-1.5 max-w-xl text-[13px] leading-relaxed text-muted">
                       {t("export.body")}
                     </p>
                   </div>
@@ -259,7 +261,7 @@ export default function Page() {
                     type="button"
                     onClick={runExport}
                     disabled={exporting}
-                    className="min-h-11 shrink-0 rounded-gs bg-blue700 px-4 font-mono text-[12px] font-semibold uppercase tracking-eyebrow text-white transition-colors hover:bg-blue900 disabled:opacity-50"
+                    className="min-h-11 shrink-0 border border-ink px-7 text-[12px] font-medium uppercase tracking-eyebrow text-ink transition-colors hover:border-blue hover:text-blue disabled:opacity-40"
                   >
                     {exporting
                       ? `${t("export.preparing")}…`
@@ -271,7 +273,7 @@ export default function Page() {
           </section>
         ) : null}
 
-        <div className="space-y-6 py-8">
+        <div className="mt-16 space-y-12">
           <GtfExplainer />
           <MethodologyAccordion reference={reference} />
         </div>

@@ -4,21 +4,20 @@ import { useI18n } from "@/lib/i18n";
 import type { CompareResponse } from "@/lib/types";
 
 function pct(n: number | null | undefined, dp = 1): string {
-  if (n == null) return "";
-  return `${n.toFixed(dp)}%`;
+  return n == null ? "" : `${n.toFixed(dp)}%`;
 }
 
 export default function CreditMetricsTable({ data }: { data: CompareResponse }) {
   const { t } = useI18n();
 
   return (
-    <div>
-      <p className="eyebrow mb-2 text-blue700">{t("cm.title")}</p>
+    <section>
+      <h2 className="mb-6 text-[20px] text-ink sm:text-[24px]">{t("cm.title")}</h2>
       <div className="overflow-x-auto">
-        <table className="xl">
+        <table className="tbl">
           <thead>
             <tr>
-              <th className="txt">{t("table.structure")}</th>
+              <th>{t("table.structure")}</th>
               <th>{t("cm.ltvInitial")}</th>
               <th>{t("cm.ltvMidlife")}</th>
               <th>{t("cm.dscr")}</th>
@@ -33,14 +32,12 @@ export default function CreditMetricsTable({ data }: { data: CompareResponse }) 
               return (
                 <tr
                   key={r.structure}
-                  className={r.structure === data.cheapest ? "xl-hi" : undefined}
+                  className={r.structure === data.cheapest ? "is-lead" : undefined}
                 >
-                  <td className="txt">{t(`structure.${r.structure}`)}</td>
+                  <td>{t(`structure.${r.structure}`)}</td>
                   <td>{m ? pct(m.ltv_initial_pct) : na}</td>
                   <td>{m?.ltv_midlife_pct != null ? pct(m.ltv_midlife_pct) : na}</td>
-                  <td>
-                    {m?.dscr_asset_x != null ? `${m.dscr_asset_x.toFixed(2)}x` : na}
-                  </td>
+                  <td>{m?.dscr_asset_x != null ? `${m.dscr_asset_x.toFixed(2)}x` : na}</td>
                   <td>{m ? m.wal_years.toFixed(1) : na}</td>
                   <td>{m?.balloon_pct != null ? pct(m.balloon_pct) : na}</td>
                 </tr>
@@ -49,9 +46,9 @@ export default function CreditMetricsTable({ data }: { data: CompareResponse }) 
           </tbody>
         </table>
       </div>
-      <p className="mt-2 max-w-3xl text-[12px] leading-relaxed text-slate">
+      <p className="mt-3 max-w-3xl text-[12px] leading-relaxed text-muted">
         {t("cm.note")}
       </p>
-    </div>
+    </section>
   );
 }
