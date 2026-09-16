@@ -26,7 +26,7 @@ import GtfExplainer from "./components/GtfExplainer";
 import MethodologyAccordion from "./components/MethodologyAccordion";
 import LoadingState from "./components/LoadingState";
 import Footer from "./components/Footer";
-import ExcelIcon from "./components/ExcelIcon";
+import { ExcelIcon } from "./components/Icons";
 
 const DEFAULT_REFERENCE_RATE = "3.8";
 
@@ -251,11 +251,11 @@ export default function Page() {
                 <CreditMetricsTable data={results!} />
                 <CashflowMatrix data={results!} />
 
-                <div className="flex flex-col gap-5 border border-ink bg-surface p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+                <div className="flex flex-col gap-5 border border-ink bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
                   <div className="flex items-start gap-4">
                     <ExcelIcon className="mt-0.5 h-9 w-9 shrink-0" />
                     <div>
-                      <p className="text-[19px] font-semibold tracking-tight2 text-ink">
+                      <p className="text-[19px] font-medium tracking-tight2 text-ink">
                         {t("export.heading")}
                       </p>
                       <p className="mt-1.5 max-w-xl text-[14px] leading-relaxed text-ink2">
@@ -267,7 +267,7 @@ export default function Page() {
                     type="button"
                     onClick={runExport}
                     disabled={exporting}
-                    className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2.5 bg-ink px-7 text-[14px] font-semibold text-white transition-colors hover:bg-blue disabled:opacity-40"
+                    className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2.5 bg-ink px-7 text-[14px] font-medium text-white transition-colors hover:bg-blue disabled:opacity-40"
                   >
                     <ExcelIcon className="h-5 w-5" />
                     {exporting

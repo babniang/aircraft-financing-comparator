@@ -27,11 +27,11 @@ function Quote({
 }) {
   return (
     <span className="flex shrink-0 items-baseline gap-2 whitespace-nowrap">
-      <span className="text-[11px] font-semibold uppercase tracking-eyebrow text-ink2">
+      <span className="text-[11px] font-medium uppercase tracking-eyebrow text-ink2">
         {label}
       </span>
       <span
-        className={`text-[17px] font-semibold leading-none tracking-tight2 ${
+        className={`text-[17px] font-medium leading-none tracking-tight2 ${
           feedsModel ? "text-blue" : "text-ink"
         }`}
       >
@@ -57,7 +57,7 @@ export default function MarketContextStrip({
         <div className="flex items-baseline gap-x-9">
           <span className="flex shrink-0 items-center gap-2 whitespace-nowrap">
             <span aria-hidden className="h-2 w-2 rounded-full bg-blue" />
-            <span className="text-[11px] font-semibold uppercase tracking-eyebrow text-ink">
+            <span className="text-[11px] font-medium uppercase tracking-eyebrow text-ink">
               {t("market.live")}
             </span>
           </span>

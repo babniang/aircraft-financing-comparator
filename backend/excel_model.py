@@ -24,6 +24,7 @@ from io import BytesIO
 
 from openpyxl import Workbook
 from openpyxl.chart import BarChart, Reference
+from openpyxl.chart.axis import ChartLines
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.worksheet import Worksheet
@@ -461,12 +462,25 @@ def _build_comparison(ws: Worksheet, rows: list[dict], cheapest_label: str) -> N
     chart = BarChart()
     chart.type = "col"
     chart.title = "Implied all-in annual financing cost"
-    chart.y_axis.numFmt = _NUM_PCT
     chart.legend = None
     data = Reference(ws, min_col=2, min_row=head, max_row=end)
     cats = Reference(ws, min_col=1, min_row=start, max_row=end)
     chart.add_data(data, titles_from_data=True)
     chart.set_categories(cats)
+
+    # openpyxl leaves axis `delete` unset, which Excel reads as "hide the axis",
+    # so the chart renders as bare bars with no category or value labels. These
+    # have to be switched on explicitly.
+    chart.x_axis.delete = False
+    chart.y_axis.delete = False
+    chart.x_axis.title = "Structure"
+    chart.y_axis.title = "Implied annual cost"
+    chart.y_axis.numFmt = _NUM_PCT
+    chart.x_axis.tickLblPos = "low"
+    chart.y_axis.tickLblPos = "nextTo"
+    chart.y_axis.majorGridlines = ChartLines()
+    chart.gapWidth = 60
+
     chart.height = 8
     chart.width = 16
     ws.add_chart(chart, f"A{m_end + 2}")

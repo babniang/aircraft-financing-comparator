@@ -14,7 +14,7 @@ export type Lang = "en" | "fr";
 type Dict = Record<string, string>;
 
 const EN: Dict = {
-  "banner.eyebrow": "Debt Capital Markets / Aircraft Finance",
+  "banner.eyebrow": "Debt Capital Markets / Aviation Finance",
   "banner.title": "Aircraft Financing Structure Comparator",
   "banner.lead":
     "Four structures a debt desk actually originates, priced on one comparable basis: the IRR of each one's incremental cash flows against paying cash.",
@@ -162,7 +162,7 @@ const EN: Dict = {
 };
 
 const FR: Dict = {
-  "banner.eyebrow": "Marchés de Dette / Financement Aéronautique",
+  "banner.eyebrow": "Marchés de Dette / Aviation",
   "banner.title": "Comparateur de Structures de Financement d'Avions",
   "banner.lead":
     "Quatre structures qu'un desk de dette met réellement en place, comparées sur une base unique : le TRI des flux différentiels de chacune face à un paiement comptant.",

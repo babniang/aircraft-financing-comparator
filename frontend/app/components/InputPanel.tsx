@@ -181,7 +181,7 @@ export default function InputPanel({
           type="button"
           onClick={onCompare}
           disabled={busy}
-          className="min-h-12 shrink-0 bg-blue px-9 text-[14px] font-semibold text-white transition-colors hover:bg-blueDark disabled:opacity-40"
+          className="min-h-12 shrink-0 bg-blue px-9 text-[14px] font-medium text-white transition-colors hover:bg-blueDark disabled:opacity-40"
         >
           {busy ? `${t("inputs.comparing")}…` : t("inputs.compare")}
         </button>
