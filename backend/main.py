@@ -31,22 +31,27 @@ from schemas import (
 app = FastAPI(title="Aircraft Financing Structure Comparator", version="1.0.0")
 
 # --- CORS -----------------------------------------------------------------
-# Allow the configured Vercel production origin plus, optionally, that
-# project's preview-deployment domains via a regex.
-_allowed_origin = os.environ.get("ALLOWED_ORIGIN", "http://localhost:3000")
+# This API is public, read-only and carries no credentials or cookies, so the
+# default when ALLOWED_ORIGIN is unset is to allow any origin. That is a
+# deliberate choice: a forgotten env var previously meant the browser silently
+# blocked every response and the page hung on "loading" forever. Set
+# ALLOWED_ORIGIN (comma-separated) to lock it down, and ALLOWED_ORIGIN_REGEX to
+# additionally match Vercel preview domains.
+_allowed_origin = os.environ.get("ALLOWED_ORIGIN", "").strip()
 _preview_regex = os.environ.get("ALLOWED_ORIGIN_REGEX")  # e.g. https://.*-myteam\.vercel\.app
 
-_cors_kwargs = dict(
-    allow_methods=["GET", "POST"],
+_cors_kwargs: dict = dict(
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
     # so the browser can read the .xlsx download filename we set
     expose_headers=["Content-Disposition"],
 )
-if _preview_regex:
-    _cors_kwargs["allow_origin_regex"] = _preview_regex
-    _cors_kwargs["allow_origins"] = [_allowed_origin]
-else:
+if _allowed_origin:
     _cors_kwargs["allow_origins"] = [o.strip() for o in _allowed_origin.split(",") if o.strip()]
+    if _preview_regex:
+        _cors_kwargs["allow_origin_regex"] = _preview_regex
+else:
+    _cors_kwargs["allow_origins"] = ["*"]
 
 app.add_middleware(CORSMiddleware, **_cors_kwargs)
 
@@ -54,6 +59,18 @@ app.add_middleware(CORSMiddleware, **_cors_kwargs)
 _REF_PATH = Path(__file__).parent / "reference_data.json"
 _REFERENCE = json.loads(_REF_PATH.read_text())
 _AIRCRAFT_BY_ID = {a["id"]: a for a in _REFERENCE["aircraft"]}
+
+
+@app.get("/")
+def root() -> dict:
+    """Liveness landing. Hitting the bare domain should say something useful."""
+    return {
+        "service": "Aircraft Financing Structure Comparator API",
+        "status": "ok",
+        "endpoints": ["/health", "/api/reference", "/api/market-context",
+                      "/api/compare", "/api/export.xlsx"],
+        "cors_allowed_origins": _cors_kwargs["allow_origins"],
+    }
 
 
 @app.get("/health")
@@ -197,9 +214,15 @@ def export_xlsx(req: CompareRequest) -> Response:
 if __name__ == "__main__":
     import uvicorn
 
+    _port = int(os.environ.get("PORT", "8000"))
+    print(
+        f"[startup] binding 0.0.0.0:{_port} | "
+        f"CORS allow_origins={_cors_kwargs['allow_origins']}",
+        flush=True,
+    )
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=int(os.environ.get("PORT", "8000")),
+        port=_port,
         log_level=os.environ.get("LOG_LEVEL", "info"),
     )

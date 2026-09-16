@@ -5,9 +5,27 @@ import type {
   ReferenceResponse,
 } from "./types";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ??
-  "http://localhost:8000";
+const CONFIGURED_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
+
+const BASE_URL = CONFIGURED_BASE_URL ?? "http://localhost:8000";
+
+/**
+ * True when the bundle is pointing at localhost but the page is not being
+ * served from localhost, i.e. NEXT_PUBLIC_API_BASE_URL was missing at BUILD
+ * time. Next inlines NEXT_PUBLIC_* during the build, so setting the variable
+ * after a deploy does nothing until the project is rebuilt. Without this check
+ * every request just fails and the page hangs on "loading" with no clue why.
+ */
+export function apiMisconfigured(): boolean {
+  if (typeof window === "undefined") return false;
+  const pageIsLocal = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname);
+  const apiIsLocal = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])/.test(BASE_URL);
+  return apiIsLocal && !pageIsLocal;
+}
+
+export function apiBaseUrl(): string {
+  return BASE_URL;
+}
 
 export class ApiError extends Error {
   constructor(

@@ -1,5 +1,7 @@
-# Optional but recommended for reproducibility. Railway will also build this
-# fine via Nixpacks without the Dockerfile; keep whichever you prefer.
+# Explicit image rather than Nixpacks autodetection: it pins the Python
+# version, guarantees the dependencies and the start command share one
+# interpreter, and removes the "which port did it bind to" guesswork that
+# causes 502s.
 FROM python:3.12-slim
 
 WORKDIR /app
@@ -12,8 +14,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Railway injects $PORT; default to 8000 for local `docker run`.
+# Railway injects $PORT at runtime and it overrides this default, which only
+# exists so `docker run -p 8000:8000` works locally. main.py reads PORT in
+# Python, so no shell expansion is involved.
 ENV PORT=8000
 EXPOSE 8000
 
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["python", "main.py"]

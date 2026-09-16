@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ApiError,
+  apiBaseUrl,
+  apiMisconfigured,
   downloadExcelModel,
   getMarketContext,
   getReference,
@@ -52,6 +54,9 @@ export default function Page() {
   const [exporting, setExporting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const hasResults = results !== null;
+  const [misconfigured, setMisconfigured] = useState(false);
+
+  useEffect(() => setMisconfigured(apiMisconfigured()), []);
 
   const formRef = useRef(form);
   formRef.current = form;
@@ -179,6 +184,18 @@ export default function Page() {
       <MarketContextStrip data={market} loading={marketLoading} />
 
       <main className="mx-auto max-w-shell px-5 sm:px-8">
+        {misconfigured && (
+          <div className="mt-6 border-l-2 border-neg bg-bluePale p-4 text-[14px] leading-relaxed text-ink">
+            <p className="font-medium">This deployment has no API URL configured.</p>
+            <p className="mt-1.5 text-ink2">
+              The build is pointing at <code>{apiBaseUrl()}</code>, so no data
+              can load. Set <code>NEXT_PUBLIC_API_BASE_URL</code> to the backend
+              URL in the hosting project, then redeploy: the value is baked in
+              at build time, so changing it without rebuilding has no effect.
+            </p>
+          </div>
+        )}
+
         <section className="py-14 sm:py-20">
           <p className="eyebrow">{t("banner.eyebrow")}</p>
           <h1 className="mt-5 max-w-4xl text-[38px] text-ink sm:text-[56px]">
@@ -201,7 +218,7 @@ export default function Page() {
               onCompare={runCompare}
               busy={busy}
             />
-          ) : (
+          ) : error ? null : (
             <p className="text-[13px] text-muted">{t("loading.inputs")}</p>
           )}
 

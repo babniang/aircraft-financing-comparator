@@ -74,18 +74,28 @@ Excel IRR matches the Python model).
 
 ### Deploy to Railway
 
-1. New Project → Deploy from GitHub repo. If monorepo, set **Root Directory**
-   to `/backend`.
-2. Nixpacks auto-detects Python. Start command (also in `railway.json`):
-   `uvicorn main:app --host 0.0.0.0 --port $PORT`, Railway injects `$PORT`.
-3. Env vars:
-   - `ALLOWED_ORIGIN` = your Vercel production URL (comma-separate for several).
-   - `ALLOWED_ORIGIN_REGEX` (optional) = regex for Vercel preview domains, e.g.
-     `https://.*-yourteam\.vercel\.app`, enables PR previews against this backend.
-4. Confirm `GET /health` returns 200; copy the `*.up.railway.app` URL.
-5. Cold-start: on the hobby tier the service sleeps after inactivity. Either
-   ping `/health` every ~10 min from an external uptime monitor, or rely on the
-   frontend's "Model is waking up…" state (it already handles this).
+The service builds from `backend/Dockerfile` (pinned Python, explicit
+dependency install, `CMD ["python", "main.py"]`), which removes the Nixpacks
+autodetection that previously produced 502s.
+
+1. New Project -> Deploy from GitHub repo.
+2. **Settings -> Source -> Root Directory = `backend`.** Without this Railway
+   builds from the repo root, finds nothing, and the domain 502s.
+3. Builder is set to Dockerfile in `railway.json`. Leave the UI's Build and
+   Start Command fields **empty**: a start command typed into the dashboard
+   overrides both `railway.json` and the image's `CMD`.
+4. Env vars: none are required. Optionally set `ALLOWED_ORIGIN` (comma
+   separated) to restrict CORS, and `ALLOWED_ORIGIN_REGEX` for Vercel preview
+   domains. With `ALLOWED_ORIGIN` unset the API allows any origin, which is
+   safe here because it is public, read-only and sends no credentials.
+5. Check the deploy log for `[startup] binding 0.0.0.0:<port>`, then
+   `curl https://<domain>/` and `curl https://<domain>/health`.
+
+**Why a 502 happens:** Railway's edge is reaching a container that is not
+listening on the injected `$PORT`. `main.py` reads `PORT` in Python rather than
+relying on the shell expanding `$PORT` in a start command, so the usual cause is
+either a stale dashboard start command or the Root Directory not being
+`backend`.
 
 ---
 
@@ -102,14 +112,17 @@ Any browser-visible env var **must** be `NEXT_PUBLIC_`-prefixed.
 
 ### Deploy to Vercel
 
-1. Import the repo. If monorepo, set **Root Directory** to `/frontend`.
+1. Import the repo. **Root Directory = `frontend`.**
 2. Framework preset: Next.js (auto).
-3. Env var `NEXT_PUBLIC_API_BASE_URL` = Railway URL, for Production **and**
-   Preview.
-4. Deploy → take the production URL → set it as `ALLOWED_ORIGIN` on Railway →
-   redeploy backend so CORS allows it.
-5. Test end-to-end on an actual phone (native `<select>` and 44px touch
-   targets don't fully reproduce in desktop devtools emulation).
+3. Env var `NEXT_PUBLIC_API_BASE_URL` = the Railway origin, with **no** `/api`
+   suffix and no trailing slash, e.g. `https://your-app.up.railway.app`. The
+   client already prefixes each call with `/api/...`. Set it for Production
+   **and** Preview.
+4. **Redeploy after setting it.** Next inlines `NEXT_PUBLIC_*` at build time, so
+   a value added after a build has no effect until the project is rebuilt. If
+   it is missing the deployed page shows a banner saying so rather than sitting
+   on "loading" forever.
+5. Test end-to-end on a real phone, not just devtools emulation.
 
 ---
 
