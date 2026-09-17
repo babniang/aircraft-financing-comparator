@@ -204,6 +204,9 @@ export default function Page() {
           <p className="mt-7 max-w-2xl text-[17px] leading-relaxed text-ink2 sm:text-[18px]">
             {t("banner.lead")}
           </p>
+          <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-muted">
+            {t("banner.dataNote")}
+          </p>
         </section>
 
         <section className="border-t border-rule pt-10">

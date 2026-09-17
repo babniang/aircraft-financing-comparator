@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo } from "react";
 import { useI18n } from "@/lib/i18n";
 import type { AircraftRef } from "@/lib/types";
+import AircraftCombobox from "./AircraftCombobox";
 
 export interface FormState {
   aircraftId: string;
@@ -37,14 +37,6 @@ export default function InputPanel({
 }) {
   const { t } = useI18n();
 
-  const { afklm, other } = useMemo(
-    () => ({
-      afklm: aircraft.filter((a) => a.afklm_fleet),
-      other: aircraft.filter((a) => !a.afklm_fleet),
-    }),
-    [aircraft],
-  );
-
   const selected = aircraft.find((a) => a.id === form.aircraftId);
 
   return (
@@ -54,29 +46,12 @@ export default function InputPanel({
           <label htmlFor="aircraft" className={LABEL}>
             {t("inputs.aircraftType")}
           </label>
-          <select
-            id="aircraft"
-            className={FIELD}
+          <AircraftCombobox
+            aircraft={aircraft}
             value={form.aircraftId}
-            onChange={(e) => onSelectAircraft(e.target.value)}
-          >
-            <optgroup label={t("inputs.groupAfklm")}>
-              {afklm.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.label}
-                  {a.gtf_exposed ? " (GTF)" : ""}
-                </option>
-              ))}
-            </optgroup>
-            <optgroup label={t("inputs.groupOther")}>
-              {other.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.label}
-                  {a.gtf_exposed ? " (GTF)" : ""}
-                </option>
-              ))}
-            </optgroup>
-          </select>
+            onSelect={onSelectAircraft}
+            placeholder={t("inputs.searchPlaceholder")}
+          />
           <p className="mt-2 h-4 text-[13px] text-ink2">{selected?.operator || ""}</p>
         </div>
 

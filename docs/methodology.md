@@ -160,9 +160,28 @@ editable per-request via the `assumptions` object.
 | `gtf_margin_addon_bps` | 35 | Extra debt margin lenders price for GTF-exposed metal (PW1100G / PW1500G) given the powder-metal inspection programme and elevated shop-visit / AOG risk. Derived from engine-risk research and RTX compensation disclosures. |
 | `gtf_value_haircut_pct` | 8.0 | Haircut to market/residual value for GTF exposure, reflecting softer secondary-market demand and higher reserve requirements for affected fleets. |
 
-`reference_data.json` (aircraft base prices, market values, LRFs, GTF flags) is
-indicative, derived from IBA/Cirium published rate ranges and OEM
-list-price/discount commentary. **It is not a valuation.**
+`reference_data.json` (31 aircraft types, prices, market values, LRFs, GTF
+flags) is indicative, not a live feed, **it is not a valuation.** Two
+methodologies, by aircraft status:
+
+- **In-production types** (A220, A320/321neo family, A321XLR, A330-900,
+  A350-900/-1000, 737 MAX 8/9/10, 787-8/-9/-10, E190/195-E2): delivery price
+  approximates the 45-55% discount to OEM list price consistently reported in
+  aviation-finance commentary (Airbus/Boeing published list prices; Cirium,
+  IBA and Leeham News deal-discount ranges); market value tracks a similar
+  band for young, current-generation airframes.
+- **Out-of-production / legacy types** (A319/320/321ceo, A330-200/-300,
+  737-800/-900, 777-200ER/-300ER/F, E170/E190): there is no current list
+  price, so both figures are current secondary-market values reflecting
+  age-driven depreciation, which is also why delivery price and market value
+  diverge sharply for these (e.g. a 777-300ER capitalised at $175m years ago
+  against a $65m market value today, exactly the gap that makes the SLB
+  one-off gain/loss meaningful).
+
+Lease rate factors follow the IBA/Cirium convention that LRF rises with
+aircraft age (shorter remaining life discounted more heavily per dollar of
+value). See `reference_data.json`'s own `sources_note` for the field-level
+statement shipped with the data.
 
 ---
 

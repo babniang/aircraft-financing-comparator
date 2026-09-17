@@ -18,6 +18,8 @@ const EN: Dict = {
   "banner.title": "Aircraft Financing Structure Comparator",
   "banner.lead":
     "Four structures a debt desk actually originates, priced on one comparable basis: the IRR of each one's incremental cash flows against paying cash.",
+  "banner.dataNote":
+    "Reference rates and market quotes are live, not placeholders: SOFR (Federal Reserve Bank of New York), \u20acSTR (European Central Bank), and AF.PA / EUR-USD via Yahoo Finance.",
 
   "nav.method": "Methodology",
   "nav.gtf": "Engine risk",
@@ -140,8 +142,7 @@ const EN: Dict = {
   "lang.current": "EN",
   "id.by": "Independent project by",
 
-  "inputs.groupAfklm": "Air France-KLM group fleet",
-  "inputs.groupOther": "Other financed types",
+  "inputs.searchPlaceholder": "Search aircraft type\u2026",
   "inputs.priceHint": "Acquisition cost of the aircraft.",
   "inputs.valueHint": "Current market value of the airframe.",
 
@@ -289,8 +290,7 @@ const FR: Dict = {
   "lang.current": "FR",
   "id.by": "Projet indépendant de",
 
-  "inputs.groupAfklm": "Flotte du groupe Air France-KLM",
-  "inputs.groupOther": "Autres types financés",
+  "inputs.searchPlaceholder": "Rechercher un type d'avion\u2026",
   "inputs.priceHint": "Coût d'acquisition de l'avion.",
   "inputs.valueHint": "Valeur de marché actuelle de la cellule.",
 

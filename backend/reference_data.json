@@ -1,6 +1,6 @@
 {
   "version": "2026-09",
-  "sources_note": "Indicative figures derived from IBA/Cirium published lease-rate-factor ranges and OEM list-price/discount commentary. See docs/methodology.md for citations. Not a valuation.",
+  "sources_note": "In-production types: delivery price approximates the typical 45-55% discount to OEM list price reported in aviation-finance commentary (Airbus/Boeing list prices, Cirium/IBA/Leeham deal-discount ranges); market value tracks a similar band for young, current-generation aircraft. Out-of-production / legacy types (A319-A321ceo, A330-200/-300, 737-800/-900, 777-200ER/-300ER, E170/E190) use current secondary-market values instead, reflecting age-driven depreciation, not a list price. Lease rate factors follow the IBA/Cirium convention of rising with aircraft age. See docs/methodology.md for the full basis and citations. Not a valuation.",
   "aircraft": [
     {
       "id": "a220-300",
@@ -9,7 +9,7 @@
       "afklm_fleet": true,
       "typical_delivery_price_usd_m": 45,
       "typical_market_value_usd_m": 48,
-      "typical_lease_rate_factor_pct": 0.80,
+      "typical_lease_rate_factor_pct": 0.8,
       "gtf_exposed": true
     },
     {
@@ -169,7 +169,7 @@
       "afklm_fleet": true,
       "typical_delivery_price_usd_m": 200,
       "typical_market_value_usd_m": 135,
-      "typical_lease_rate_factor_pct": 0.80,
+      "typical_lease_rate_factor_pct": 0.8,
       "gtf_exposed": false
     },
     {
@@ -269,7 +269,7 @@
       "afklm_fleet": false,
       "typical_delivery_price_usd_m": 135,
       "typical_market_value_usd_m": 140,
-      "typical_lease_rate_factor_pct": 0.70,
+      "typical_lease_rate_factor_pct": 0.7,
       "gtf_exposed": false
     },
     {
