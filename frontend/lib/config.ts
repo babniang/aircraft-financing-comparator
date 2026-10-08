@@ -6,8 +6,8 @@ export const AUTHOR_PROGRAM = "BBA4 / Master 1, Corporate & Investment Banking";
 export const AUTHOR_LICENCE = "Pilot (Private Pilot's Licence holder)";
 export const AUTHOR_INTEREST_EN = "Passionate about capital markets and aviation";
 export const AUTHOR_INTEREST_FR = "Passionné par les marchés de capitaux et l'aviation";
-export const AUTHOR_AVAILABILITY_EN = "Available January to July 2027";
-export const AUTHOR_AVAILABILITY_FR = "Disponible de janvier à juillet 2027";
+export const AUTHOR_AVAILABILITY_EN = "Available for a 6-month internship starting in January, February or March 2027";
+export const AUTHOR_AVAILABILITY_FR = "Disponible pour un stage de 6 mois à partir de janvier, février ou mars 2027";
 
 export const RESUME_URL =
   "https://edheccom-my.sharepoint.com/:b:/g/personal/babacar_niang_edhec_com/IQA3sSFWwVY6Qr5POujBC1GKAaABkXGCw027h5SP81B9XXY?e=N0ykNl";
