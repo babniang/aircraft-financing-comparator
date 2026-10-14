@@ -111,3 +111,32 @@ def test_export_xlsx_returns_workbook_with_matching_irr():
     assert abs(excel_sll - py_costs["sll"]) < 0.05
     assert abs(excel_jolco - py_costs["jolco"]) < 0.05
     assert abs(excel_slb - py_costs["slb"]) < 0.05
+
+    # This test is the cross-check: the workbook carries no pasted Python
+    # numbers, so agreement is enforced here instead of asserted in a cell.
+    def raw(key_suffix: str):
+        for k, v in sol.items():
+            if k.upper().endswith(key_suffix.upper()):
+                return v.value[0][0]
+        raise KeyError(key_suffix)
+
+    # Every structure tab's formula integrity checks pass (Comparison F4..F7).
+    for row in (4, 5, 6, 7):
+        assert str(raw(f"COMPARISON'!F{row}")) == "OK", f"integrity check failed on row {row}"
+
+    # Credit metrics are live formulas too (Comparison rows 17..20 = eca/sll/jolco/slb).
+    cm = {x["structure"]: x["credit_metrics"] for x in compare["results"]}
+    for row, key in zip((17, 18, 19, 20), ("eca_debt", "sll", "jolco", "slb")):
+        m = cm[key]
+        assert abs(cell(f"COMPARISON'!B{row}") * 100 - m["ltv_initial_pct"]) < 0.06
+        assert abs(cell(f"COMPARISON'!D{row}") - m["dscr_asset_x"]) < 0.006
+        assert abs(cell(f"COMPARISON'!E{row}") - m["wal_years"]) < 0.06
+        if m["ltv_midlife_pct"] is not None:
+            assert abs(cell(f"COMPARISON'!C{row}") * 100 - m["ltv_midlife_pct"]) < 0.06
+        if m["balloon_pct"] is not None:
+            assert abs(cell(f"COMPARISON'!F{row}") * 100 - m["balloon_pct"]) < 0.06
+
+    # The headline and its caveat are live lookups, not text written at export.
+    py_cheapest = next(x["label"] for x in compare["results"] if x["structure"] == compare["cheapest"])
+    assert raw("COMPARISON'!B10") == py_cheapest
+    assert "execute" in str(raw("COMPARISON'!B13")) or "agency" in str(raw("COMPARISON'!B13"))

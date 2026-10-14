@@ -157,9 +157,27 @@ def test_slb_residual_giveup_raises_cost_above_naive():
 def test_slb_explicit_residual_override():
     a = fm.Assumptions.merge({"slb_residual_value_pct": 40.0})
     res = fm.slb(delivery_price=50.0, market_value=52.0, tenor_years=10, a=a)
-    # year-10 outflow = -rental - 0.40*50
+    # override is a % of TODAY'S market value: year-10 outflow = -rental - 0.40*52
     rental = 52.0 * (0.80 / 100.0) * 12.0
-    assert res.cashflow_schedule[-1]["amount_usd_m"] == pytest.approx(-(rental + 20.0), abs=1e-6)
+    assert res.cashflow_schedule[-1]["amount_usd_m"] == pytest.approx(-(rental + 20.8), abs=1e-6)
+
+
+def test_slb_residual_never_exceeds_todays_value_for_legacy_jets():
+    """Regression: the curve used to be applied to the historical delivery
+    price, so a 777-300ER capitalised at $175m but worth $65m today was
+    projected to be worth $80m at lease end. Residual must project forward
+    from current market value."""
+    a = fm.Assumptions.merge(None)
+    res = fm.slb(delivery_price=175.0, market_value=65.0, tenor_years=12, a=a)
+    assert res.residual_value_usd_m < 65.0
+    assert res.residual_value_usd_m == pytest.approx(65.0 * (1 - 0.045 * 12), abs=1e-3)
+
+
+def test_retention_curve_parameters_and_floor():
+    assert fm._retention(12) == pytest.approx(0.46)
+    assert fm._retention(30) == pytest.approx(0.15)          # floored
+    assert fm._retention(10, 5.0, 20.0) == pytest.approx(0.50)
+    assert fm._retention(20, 5.0, 20.0) == pytest.approx(0.20)  # custom floor
 
 
 def test_slb_gtf_haircut_reduces_sale_and_gain():

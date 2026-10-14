@@ -17,6 +17,10 @@ const config: Config = {
         rule: "#dfe3e6",
         ruleStrong: "#b9c0c4",
         neg: "#c62828",
+        excel: "#107c41",
+        excelDark: "#0b5a2f",
+        amberPale: "#fff4de",
+        amberInk: "#7a4e00",
       },
       fontFamily: {
         sans: ["var(--font-inter)", '"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],

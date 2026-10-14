@@ -43,7 +43,7 @@ export default function ResultsTable({ data }: { data: CompareResponse }) {
                 <td className="metric">{num(r.implied_annual_cost_pct, 2)}%</td>
                 <td>{num(r.financed_pct_of_price, 0)}%</td>
                 <td className="txt">
-                  {r.balance_sheet === "on" ? t("table.on") : t("table.off")}
+                  {t(`acct.${r.structure}`)}
                 </td>
                 <td className={oneOff.neg ? "neg" : undefined}>
                   {oneOff.text || <span className="muted">{t("table.na")}</span>}

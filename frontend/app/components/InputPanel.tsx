@@ -3,6 +3,7 @@
 import { useI18n } from "@/lib/i18n";
 import type { AircraftRef } from "@/lib/types";
 import AircraftCombobox from "./AircraftCombobox";
+import { ExcelIcon } from "./Icons";
 
 export interface FormState {
   aircraftId: string;
@@ -26,6 +27,8 @@ export default function InputPanel({
   onSelectAircraft,
   onCompare,
   busy,
+  onExport,
+  exporting,
 }: {
   aircraft: AircraftRef[];
   form: FormState;
@@ -34,6 +37,8 @@ export default function InputPanel({
   onSelectAircraft: (id: string) => void;
   onCompare: () => void;
   busy: boolean;
+  onExport: () => void;
+  exporting: boolean;
 }) {
   const { t } = useI18n();
 
@@ -152,14 +157,27 @@ export default function InputPanel({
           </label>
         </div>
 
-        <button
-          type="button"
-          onClick={onCompare}
-          disabled={busy}
-          className="min-h-12 shrink-0 bg-blue px-9 text-[14px] font-medium text-white transition-colors hover:bg-blueDark disabled:opacity-40"
-        >
-          {busy ? `${t("inputs.comparing")}…` : t("inputs.compare")}
-        </button>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <button
+            type="button"
+            onClick={onCompare}
+            disabled={busy}
+            className="min-h-12 shrink-0 bg-blue px-9 text-[15px] font-medium text-white transition-colors hover:bg-blueDark disabled:opacity-40"
+          >
+            {busy ? `${t("inputs.comparing")}…` : t("inputs.compare")}
+          </button>
+          <button
+            type="button"
+            onClick={onExport}
+            disabled={exporting}
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2.5 bg-excel px-6 text-[15px] font-medium text-white transition-colors hover:bg-excelDark disabled:opacity-40"
+          >
+            <span className="flex h-6 w-6 items-center justify-center rounded-[3px] bg-white">
+              <ExcelIcon className="h-5 w-5" />
+            </span>
+            {exporting ? `${t("export.preparing")}…` : t("export.ctaInputs")}
+          </button>
+        </div>
       </div>
     </div>
   );

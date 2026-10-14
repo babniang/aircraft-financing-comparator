@@ -38,8 +38,10 @@ DEFAULTS: dict[str, float] = {
     "sll_base_margin_bps": 140,
     "sll_kpi_ratchet_bps": 10,    # margin step per KPI direction
     "slb_lease_rate_factor_pct": 0.80,  # MONTHLY rental as % of aircraft value
-    "slb_residual_value_pct": 0.0,  # % of delivery price the lessee forgoes at
-    #                                 lease end; 0 => derive from tenor (see slb())
+    "slb_residual_value_pct": 0.0,  # % of TODAY'S market value the lessee forgoes
+    #                                 at lease end; 0 => derive from the curve below
+    "slb_depreciation_pct": 4.5,  # straight-line value loss, % of today's value per year
+    "slb_residual_floor_pct": 15.0,  # value floor (part-out / teardown), % of today's value
     "jolco_ltv_pct": 0.80,        # portion of price funded through the JOLCO SPC
     "jolco_base_margin_bps": 120,  # senior-debt margin inside the JOLCO
     "jolco_tax_benefit_bps": 75,  # Japanese tax-equity benefit rebated into rentals
@@ -64,6 +66,8 @@ class Assumptions:
     sll_kpi_ratchet_bps: float = DEFAULTS["sll_kpi_ratchet_bps"]
     slb_lease_rate_factor_pct: float = DEFAULTS["slb_lease_rate_factor_pct"]
     slb_residual_value_pct: float = DEFAULTS["slb_residual_value_pct"]
+    slb_depreciation_pct: float = DEFAULTS["slb_depreciation_pct"]
+    slb_residual_floor_pct: float = DEFAULTS["slb_residual_floor_pct"]
     jolco_ltv_pct: float = DEFAULTS["jolco_ltv_pct"]
     jolco_base_margin_bps: float = DEFAULTS["jolco_base_margin_bps"]
     jolco_tax_benefit_bps: float = DEFAULTS["jolco_tax_benefit_bps"]
@@ -154,13 +158,27 @@ def annuity_payment(principal: float, annual_rate: float, years: int) -> float:
     return principal * factor
 
 
-def _retention(years: float) -> float:
-    """Crude age-based value-retention factor: what fraction of today's value
-    the airframe holds after ``years``. A fuller model would use a published
-    residual-value curve by type; this straight line (~46% at 12y, floored at
-    15%) is enough for a comparison tool. Used by the SLB residual and by the
-    mid-life LTV in the credit metrics."""
-    return max(0.15, 1.0 - 0.045 * years)
+def _retention(years: float, depreciation_pct: float = 4.5, floor_pct: float = 15.0) -> float:
+    """Fraction of TODAY'S market value the airframe still holds ``years`` from
+    now: straight line at ``depreciation_pct`` a year, floored at ``floor_pct``.
+
+    Basis for the 4.5% / 15% defaults (see docs/methodology.md):
+
+    * 4.5% a year is a ~20-year economic life with a small residual, the
+      shape of mainstream airline IAS 16 policies (Lufthansa Group, for
+      instance, depreciates aircraft straight-line over 20 years to a 5%
+      residual, i.e. 4.75% a year).
+    * It gives ~46% retained after 12 years, inside the 45-55% range that
+      appraiser base-value curves typically show for a 12-year-old
+      narrowbody.
+    * The 15% floor stands in for part-out / teardown value: an airframe with
+      saleable engines and components does not go to zero.
+
+    Applied to current market value, never to the original delivery price:
+    projecting forward from a historical capitalised cost would value an old
+    jet above what it is worth today.
+    """
+    return max(floor_pct / 100.0, 1.0 - depreciation_pct / 100.0 * years)
 
 
 def _amortization(principal: float, annual_rate: float, years: int) -> tuple[list[float], float]:
@@ -207,6 +225,8 @@ def _debt_credit_metrics(
     wal_years: float | None = None,
     balloon_amount: float = 0.0,
     settle_year: int | None = None,
+    depreciation_pct: float = 4.5,
+    floor_pct: float = 15.0,
 ) -> CreditMetrics:
     """Credit metrics for an amortizing debt-style structure (ECA, SLL, JOLCO).
 
@@ -219,7 +239,7 @@ def _debt_credit_metrics(
 
     end = settle_year or tenor_years
     mid = max(1, end // 2)
-    depreciated_value = market_value * _retention(mid)
+    depreciated_value = market_value * _retention(mid, depreciation_pct, floor_pct)
     outstanding_mid = balances[mid] if mid < len(balances) else 0.0
 
     asset_earning = market_value * (lrf_pct / 100.0) * 12.0
@@ -301,6 +321,8 @@ def eca_debt(
         annual_outflow=debt_service + guarantee_fee_annual,
         market_value=market_value,
         lrf_pct=a.slb_lease_rate_factor_pct,
+        depreciation_pct=a.slb_depreciation_pct,
+        floor_pct=a.slb_residual_floor_pct,
     )
 
     return StructureResult(
@@ -355,6 +377,8 @@ def sll(
         annual_outflow=debt_service,
         market_value=market_value,
         lrf_pct=a.slb_lease_rate_factor_pct,
+        depreciation_pct=a.slb_depreciation_pct,
+        floor_pct=a.slb_residual_floor_pct,
     )
 
     return StructureResult(
@@ -391,13 +415,16 @@ def slb(
     # genuinely comparable to the debt structures: under the cash baseline (and
     # under ECA/SLL financed purchases) the airline still *owns* the aircraft at
     # year N; under an operating SLB it hands the metal back and owns nothing.
-    # Without this term the SLB looks artificially cheap. Default: derive a
-    # crude age-based retention from the tenor (a fuller model would use a
-    # published residual-value curve); override via slb_residual_value_pct.
+    # Without this term the SLB looks artificially cheap. The residual is
+    # projected forward from TODAY'S market value along the depreciation curve
+    # in _retention(); basing it on the historical delivery price would, for a
+    # legacy jet, value the aircraft at lease end above its value now.
     if a.slb_residual_value_pct > 0:
-        residual_value = delivery_price * a.slb_residual_value_pct / 100.0
+        residual_value = market_value * a.slb_residual_value_pct / 100.0
     else:
-        residual_value = delivery_price * _retention(tenor_years)  # ~46% at 12y
+        residual_value = market_value * _retention(
+            tenor_years, a.slb_depreciation_pct, a.slb_residual_floor_pct
+        )  # ~46% of today's value at 12y
     if gtf_adjustment:
         residual_value *= 1.0 - a.gtf_value_haircut_pct / 100.0
 
@@ -518,6 +545,8 @@ def jolco(
         wal_years=wal,
         balloon_amount=call_price,
         settle_year=call_year,
+        depreciation_pct=a.slb_depreciation_pct,
+        floor_pct=a.slb_residual_floor_pct,
     )
 
     note = (

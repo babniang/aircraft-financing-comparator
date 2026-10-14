@@ -18,6 +18,8 @@ class AssumptionsIn(BaseModel):
     sll_kpi_ratchet_bps: Optional[float] = Field(default=None, ge=0, le=100)
     slb_lease_rate_factor_pct: Optional[float] = Field(default=None, ge=0, le=5)
     slb_residual_value_pct: Optional[float] = Field(default=None, ge=0, le=100)
+    slb_depreciation_pct: Optional[float] = Field(default=None, ge=0, le=20)
+    slb_residual_floor_pct: Optional[float] = Field(default=None, ge=0, le=100)
     jolco_ltv_pct: Optional[float] = Field(default=None, ge=0, le=1)
     jolco_base_margin_bps: Optional[float] = Field(default=None, ge=0, le=1000)
     jolco_tax_benefit_bps: Optional[float] = Field(default=None, ge=0, le=400)

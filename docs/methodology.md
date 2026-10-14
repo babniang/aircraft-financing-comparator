@@ -37,10 +37,40 @@ rentals (as a naive reading of the spec would) makes the SLB look
 ~4 percentage points cheaper than it is. The model adds a year-N outflow equal
 to the residual value the lessee forgoes.
 
-Default residual = `delivery_price × max(0.15, 1 − 0.045 × tenor_years)`
-(≈ 46% of new price at a 12-year tenor, a crude age-based retention curve).
-Override with `slb_residual_value_pct` (percent of delivery price). A fuller
-model would use a published residual-value curve by type.
+Default residual = `market_value_today × max(floor, 1 − depreciation × tenor)`,
+with `slb_depreciation_pct` = 4.5 and `slb_residual_floor_pct` = 15 (both
+editable, both on the workbook's Assumptions tab). Why these numbers:
+
+- **4.5% a year, straight line** is a ~20-year economic life with a small
+  residual, the shape of mainstream airline IAS 16 policy. Lufthansa Group, for
+  example, depreciates aircraft straight-line over 20 years to a 5% residual,
+  i.e. 4.75% a year.
+- **~46% retained after 12 years** sits inside the 45-55% band that appraiser
+  base-value curves typically show for a 12-year-old narrowbody, which is the
+  tenor that matters most here.
+- **The 15% floor** stands in for part-out / teardown value: an airframe with
+  saleable engines and components does not depreciate to zero.
+- **The base is today's market value, never the original delivery price.** An
+  earlier version applied the curve to the delivery price, which for a legacy
+  jet projected a value at lease end *above* its value today (a 777-300ER
+  capitalised at $175m but worth $65m was "retaining" $80m after 12 years).
+  Projecting forward from current value removes that, and a regression test
+  pins it.
+
+Known limitation: real base-value curves are convex (faster loss early, slower
+late), so a straight line slightly understates value at long tenors and
+overstates it in the first years. Override with `slb_residual_value_pct`
+(percent of today's market value) when you have an appraisal.
+
+### Accounting treatment (IFRS 16)
+
+The SLB is **not** off balance sheet. Since IFRS 16 (2019) the airline
+derecognises the aircraft but recognises a right-of-use asset and a lease
+liability, and books only the share of the disposal gain that relates to the
+rights transferred. The tool shows "sale price less delivery price" as the
+economic gain and labels it as such. JOLCO, with a call that is reasonably
+certain to be exercised, is a finance lease; ECA and SLL leave an owned asset
+and a loan on balance sheet.
 
 ### How the JOLCO is modelled
 
